@@ -11,7 +11,7 @@ server.listen(8001);
 
 
 app.use(express.static('public'));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
+app.use(express.static('node_modules'));
 
 io.on('connection', function (socket) {
   console.log("Successfully connected");

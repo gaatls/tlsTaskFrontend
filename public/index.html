@@ -4,11 +4,86 @@
         <meta charset="UTF-8">
         <title>TLS Task Input</title>
 
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="jquery/dist/jquery.min.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
         <script src="index.js"></script>
     </head>
     <body>
-        
+        <form class="form-horizontal">
+            <fieldset>
+
+            <!-- Form Name -->
+            <legend>TLS Task Input Form</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="nameRequester">Name</label>  
+            <div class="col-md-4">
+            <input id="nameRequester" name="nameRequester" type="text" placeholder="ex. John Smith" class="form-control input-md" required="">
+                
+            </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="emailRequester">RIT Email</label>  
+            <div class="col-md-4">
+            <input id="emailRequester" name="emailRequester" type="text" placeholder="ex. jxszzz@rit.edu" class="form-control input-md" required="">
+                
+            </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="courseID">Valid Course ID</label>  
+            <div class="col-md-4">
+            <input id="courseID" name="courseID" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md" required="">
+                
+            </div>
+            </div>
+
+            <!-- Multiple Radios -->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="requestMadeByProf">Request from Course Professor?</label>
+            <div class="col-md-4">
+            <div class="radio">
+                <label for="requestMadeByProf-0">
+                <input type="radio" name="requestMadeByProf" id="requestMadeByProf-0" value="true" checked="checked" onclick="handleRadioRequestMadeByProf(this.value);">
+                Yes
+                </label>
+                </div>
+            <div class="radio">
+                <label for="requestMadeByProf-1">
+                <input type="radio" name="requestMadeByProf" id="requestMadeByProf-1" value="false" onclick="handleRadioRequestMadeByProf(this.value);">
+                No
+                </label>
+                </div>
+            </div>
+            </div>
+
+                <div id="professor-detail-input_hidden">
+                        <!-- Text input-->
+                        <div class="form-group">
+                        <label class="col-md-4 control-label" for="nameProfessor">Professor's Name</label>  
+                        <div class="col-md-4">
+                        <input id="nameProfessor" name="nameProfessor" type="text" placeholder="ex. Sam Jackson" class="form-control input-md">
+                            
+                        </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                        <label class="col-md-4 control-label" for="emailProfessor">Professor's Email</label>  
+                        <div class="col-md-4">
+                        <input id="emailProfessor" name="emailProfessor" type="text" placeholder="ex. sxjzzz@rit.edu" class="form-control input-md">
+                            
+                        </div>
+                        </div>
+                </div>
+
+            </fieldset>
+        </form>
     </body>
 </html>
