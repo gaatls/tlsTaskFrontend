@@ -1,0 +1,30 @@
+{
+  "name": "tlstaskfrontend",
+  "version": "1.0.0",
+  "description": "Task input page for TLS services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaatls/tlsTaskFrontend.git"
+  },
+  "keywords": [
+    "tls",
+    "tasks",
+    "frontend"
+  ],
+  "author": "Hayden Wagner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaatls/tlsTaskFrontend/issues"
+  },
+  "homepage": "https://github.com/gaatls/tlsTaskFrontend#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8",
+    "tls-asana": "git://github.com/gaatls/TLSasana.git#8e5cc3b0318"
+  }
+}
