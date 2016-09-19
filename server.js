@@ -21,14 +21,18 @@ io.on('connection', function (socket) {
       console.log(data);
   });
 
+  socket.on('form-submission', function (data) {
+      console.log(data);
+  });
+
   //------------
   if(tlsAsana){
       tlsAsana.connect(166216691534199).then(client => {
           //asanaConnection = client;
           console.log('Asana Connected and setup');
-          tlsAsana.checkTagCache().then(res=>{
-            console.log(res);
-          })
+        //   tlsAsana.checkTagCache().then(res=>{
+        //     console.log(res);
+        //   })
       });
   }
 });
