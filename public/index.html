@@ -7,34 +7,41 @@
         <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="style.css">
         <script src="jquery/dist/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.0/lodash.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
         <script src="index.js"></script>
     </head>
     <body>
-        <form data-toggle="validator" role="form">
+        <form id='tlsTaskForm' data-toggle="validator" role="form">
             <div class="form-horizontal">
+
 
                 <!-- Form Name -->
                 <legend>TLS Task Input Form</legend>
 
-                <!-- Text input-->
+
+                <!-- Requester Name input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="nameRequester">Name</label>  
                     <div class="col-md-4">
                         <input id="nameRequester" name="nameRequester" type="text" placeholder="ex. John Smith" class="form-control input-md" required="">
                     </div>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
 
-                <!-- Text input-->
+
+                <!-- Requester Email input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="emailRequester">RIT Email</label>  
+                    <label for="emailRequester" class="col-md-4 control-label">RIT Email</label>
                     <div class="col-md-4">
-                        <input id="emailRequester" name="emailRequester" type="text" placeholder="ex. jxszzz@rit.edu" class="form-control input-md" required="">
+                        <input type="email" class="form-control" id="emailRequester" placeholder="ex. jxszzz@rit.edu" data-error="Email address is invalid" required>
                     </div>
+                    <div class="col-md-4 help-block with-errors"></div>
                 </div>
 
-                <!-- Text input-->
+                
+                <!-- Course ID input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="courseID">Valid Course ID</label>  
                     <div class="col-md-4">
@@ -42,25 +49,32 @@
                     </div>
                 </div>
 
-                <!-- Multiple Radios -->
+
+                <!-- Request from Course Teacher(?) radios -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="requestMadeByProf">Request from Course Professor?</label>
                     <div class="col-md-4">
+
                         <div class="radio">
                             <label for="requestMadeByProf-0">
                                 <input type="radio" name="requestMadeByProf" id="requestMadeByProf-0" value="true" checked="checked" onclick="handleRadioRequestMadeByProf(this.value);">Yes
                             </label>
                         </div>
+
                         <div class="radio">
                             <label for="requestMadeByProf-1">
                                 <input type="radio" name="requestMadeByProf" id="requestMadeByProf-1" value="false" onclick="handleRadioRequestMadeByProf(this.value);">No
                             </label>
                         </div>
+
                     </div>
                 </div>
 
+
+                <!-- Hidden unless the radio above is set to 'no' -->
                 <div id="professor-detail-input_hidden">
-                    <!-- Text input-->
+                    
+                    <!-- Professor Name input-->
                     <div class="form-group">
                     <label class="col-md-4 control-label" for="nameProfessor">Professor's Name</label>  
                         <div class="col-md-4">
@@ -68,16 +82,26 @@
                         </div>
                     </div>
 
-                    <!-- Text input-->
+                    <!-- Professor Email input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="emailProfessor">Professor's Email</label>  
                         <div class="col-md-4">
-                            <input id="emailProfessor" name="emailProfessor" type="text" placeholder="ex. sxjzzz@rit.edu" class="form-control input-md">
+                            <input id="emailProfessor" name="emailProfessor" type="email" placeholder="ex. sxjzzz@rit.edu" class="form-control input-md">
                         </div>
                     </div>
+
                 </div>
 
-                <button type="submit" class="btn btn-primary disabled">Submit</button>
+
+                <!-- Form Submit -->
+                <div class="form-group">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary disabled">Submit</button>
+                    </div>
+                </div>
+                
 
             </div>
         </form>
