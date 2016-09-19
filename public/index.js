@@ -8,6 +8,37 @@ socket.on('connected', function (data) {
     socket.emit('send back', "alright");
 });
 
+$( document ).ready(function docReady(){
+
+    $('#tlsTaskForm').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            // handle the invalid form...
+            console.log('Form error');
+        } else {
+            e.preventDefault();
+            handFormSubmission(e.target);
+        }
+    });
+    
+});
+
+
+/**
+ * Handles the data submitted by a user through the tls form
+ * 
+ * @param {Array} form All form fields of submitted form
+ */
+function handFormSubmission(fields){
+    var data = {};
+
+    data.nameRequester = _.find(fields, function(x){return x.id === 'nameRequester';}).value;
+    data.emailRequester = _.find(fields, function(x){return x.id === 'emailRequester';}).value;
+    data.courseID = _.find(fields, function(x){return x.id === 'courseID';}).value;
+
+    //send our form data to the server
+    socket.emit('form-submission', data);
+}
+
 
 
 /**
@@ -32,3 +63,5 @@ function handleRadioRequestMadeByProf(val){
        el.find('input').attr("required", true);
     }
 }
+
+
