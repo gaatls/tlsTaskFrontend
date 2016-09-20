@@ -5,3 +5,7 @@
 #professor-detail-input_not-hidden {
     display: block;
 }
+
+legend {
+    text-align: center;
+}
