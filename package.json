@@ -26,6 +26,6 @@
     "express": "^4.14.0",
     "jquery": "^3.1.0",
     "socket.io": "^1.4.8",
-    "tls-asana": "git://github.com/gaatls/TLSasana.git#0fcfbd6077b8"
+    "tls-asana": "git://github.com/gaatls/TLSasana.git#2d73229f4cb0b"
   }
 }
