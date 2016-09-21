@@ -6,6 +6,10 @@ let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let _ = require('lodash');
 let tlsAsana = require('tls-asana');
+
+var moment = require('moment');
+moment().format();
+
 let tlsAsanaPromise = null;
 
 server.listen(8001);
@@ -33,18 +37,20 @@ io.on('connection', function (socket) {
 
 
 /**
- * Handles a submission to create a new task from the tls task input frontend form
+ * Handles a submission to create a new task from the tls task input frontend form. 
+ * Creates a title date and generates the task name before creating the task.
  * 
  * param {object} data - Task data from the submitted form
  */
 function socketFormSubmission(socket, data){
-    let taskName = generateTaskName(data);
+    let taskName = "";
+
+    data.titleDate = moment().format('L LT');
+    taskName = generateTaskName(data);
 
     tlsAsanaPromise.then(function(){
         tlsAsana.createTask(taskName, data).then(response => {
-            console.log(response);
-            console.log('task inputted Successfully');
-
+            console.log('Task created successfully');
             socket.emit('task-input-success', response);
         });
     });
@@ -63,11 +69,11 @@ function generateTaskName(data){
     let taskNameStr = "";
 
     //edit if we want to change the structure of the titles in asana
-    let titleFields = ['type', 'date', 'courseID', 'nameRequester'];
+    let titleFields = ['type', 'titleDate', 'courseID', 'nameRequester'];
 
     _.forEach(titleFields, function(x){
         if( data[x] ){
-            //if else just adds space between fields in name after the first one
+            //if else just adds space between fields in name after the first field
             if(taskNameStr === ""){
                 taskNameStr = taskNameStr + data[x];
             }
