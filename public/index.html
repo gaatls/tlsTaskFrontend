@@ -23,9 +23,10 @@
 
                 <!-- Requester Name input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="nameRequester">Name</label>  
+                    <label class="col-md-4 control-label" for="nameRequester">Requested by</label>  
                     <div class="col-md-4">
                         <input id="nameRequester" name="nameRequester" type="text" placeholder="ex. John Smith" class="form-control input-md" required="">
+                        <div class="help-block">Full name of the person making the request</div>
                     </div>
                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
@@ -36,6 +37,7 @@
                     <label for="emailRequester" class="col-md-4 control-label">RIT Email</label>
                     <div class="col-md-4">
                         <input type="email" class="form-control" id="emailRequester" placeholder="ex. jxszzz@rit.edu" data-error="Email address is invalid" required>
+                        <div class="help-block">Valid RIT email address of the person making the request</div>
                     </div>
                     <div class="col-md-4 help-block with-errors"></div>
                 </div>
@@ -46,6 +48,7 @@
                     <label class="col-md-4 control-label" for="courseID">Valid Course ID</label>  
                     <div class="col-md-4">
                         <input id="courseID" name="courseID" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md" required="">
+                        <div class="help-block">Valid course ID for the request</div>
                     </div>
                 </div>
 
@@ -91,6 +94,26 @@
                     </div>
 
                 </div>
+
+
+
+                <!-- Request Type input -->
+
+                <!--<div class="form-group">
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="underwear" required>
+                        Boxers
+                    </label>
+                    </div>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="underwear" required>
+                        Briefs
+                    </label>
+                    </div>
+                </div>-->
+
 
 
                 <!-- Form Submit -->

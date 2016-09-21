@@ -26,7 +26,7 @@ io.on('connection', function (socket) {
     socket.emit('connected', "Successfully connected");
 
     socket.on('form-submission', data => {
-        socketFormSubmission(data);  
+        socketFormSubmission(socket, data);  
     });
 });
 
@@ -37,7 +37,7 @@ io.on('connection', function (socket) {
  * 
  * param {object} data - Task data from the submitted form
  */
-function socketFormSubmission(data){
+function socketFormSubmission(socket, data){
     let taskName = generateTaskName(data);
 
     tlsAsanaPromise.then(function(){
