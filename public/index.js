@@ -1,6 +1,8 @@
 'use strict';
 
-var addToTaskData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
+var addFieldsToData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
+//list the group name to select with jquery to get checkbox form values
+var addCheckBoxToData = ['type'];
 
 
 var socket = io.connect('http://localhost:8001');
@@ -45,8 +47,20 @@ $( document ).ready(function docReady(){
 function handFormSubmission(fields){
     var data = {};
 
+    data = filterFields(fields, data);
+    data = filterCheckboxes(data);
+
+    console.log(data);
+
+    //send our form data to the server
+    socket.emit('form-submission', data);
+}
+
+
+
+function filterFields(fields, data){
     var filteredFormFields = _.filter(fields, function(x){
-       return _.includes(addToTaskData, x.id);
+       return _.includes(addFieldsToData, x.id);
     });
 
     _.forEach(filteredFormFields, function(x){
@@ -55,11 +69,23 @@ function handFormSubmission(fields){
         }
     })
 
-    console.log(data);
-
-    //send our form data to the server
-    socket.emit('form-submission', data);
+    return data;
 }
+
+
+
+function filterCheckboxes(data){
+    _.forEach(addCheckBoxToData, function(x){
+        var el = $( 'input[name="type"]:checked' );
+        
+        if(el){
+            data[x] = el[0].value;
+        }
+    })
+
+    return data;
+}
+
 
 
 var deletedFormValues = {};
