@@ -17,7 +17,7 @@ io.on('connection', function (socket) {
     console.log("Successfully connected");
   
     if(tlsAsana){
-        tlsAsanaPromise = tlsAsana.connect(166216691534199).then(client => {
+        tlsAsanaPromise = tlsAsana.connect('166216691534199').then(client => {
             console.log('Asana Connected and setup');
             //   tlsAsana.checkTagCache().then(res=>{
             //     console.log(res);
@@ -34,13 +34,16 @@ io.on('connection', function (socket) {
 
     socket.on('form-submission', function(data) {
         console.log(data);
-        
-        //tlsAsanaPromise.then(function(){
-            tlsAsana.createTask('tester9', data).then(response => {
-                console.log(res);
+
+        tlsAsanaPromise.then(function(){
+            tlsAsana.createTask('testtask10', data).then(response => {
+                console.log(response);
                 console.log('task inputted Successfully');
+
+                socket.emit('task-input-success', response);
             });
-        //})
+        });
+
     });
 
   //------------
