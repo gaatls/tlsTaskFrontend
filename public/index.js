@@ -1,12 +1,27 @@
 'use strict';
-//let bootstrap = require('bootstrap');
-//console.log(bootstrap);
+
+var addToTaskData = ['nameRequester','emailRequester','courseID'];
+
+
 var socket = io.connect('http://localhost:8001');
 
 socket.on('connected', function (data) {
     console.log(data);
     socket.emit('send back', "alright");
 });
+
+socket.on('task-input-success', function(data){
+    console.log(data);
+    //do anything we need to do after a successful task input (notify user, give them next steps)
+});
+
+socket.on('task-input-failure', function(data){
+    console.log(data);
+    //do anything we need to do after a failed task input (notify user, give them next steps to retry entry or give error status telling them what went wrong????)
+});
+
+
+
 
 $( document ).ready(function docReady(){
 
@@ -31,9 +46,15 @@ $( document ).ready(function docReady(){
 function handFormSubmission(fields){
     var data = {};
 
-    data.nameRequester = _.find(fields, function(x){return x.id === 'nameRequester';}).value;
-    data.emailRequester = _.find(fields, function(x){return x.id === 'emailRequester';}).value;
-    data.courseID = _.find(fields, function(x){return x.id === 'courseID';}).value;
+    var filteredFormFields = _.filter(fields, function(x){
+       return _.includes(addToTaskData, x.id);
+    });
+
+    _.each(filteredFormFields, function(x){
+        data[x.id] = x.value;
+    })
+
+    console.log(data);
 
     //send our form data to the server
     socket.emit('form-submission', data);
