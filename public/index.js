@@ -26,6 +26,15 @@ socket.on('task-input-failure', function(data){
 
 $( document ).ready(function docReady(){
 
+    //loading screen test
+
+    waitingDialog.show('Test task input loading screen');
+    setTimeout(function () {
+        waitingDialog.hide();
+    }, 2500);
+
+    // end loading screen test
+
     $('#tlsTaskForm').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
             // handle the invalid form...
