@@ -17,6 +17,28 @@
     </head>
     <body>
         <form id='tlsTaskForm' data-toggle="validator" role="form">
+            <div class="modal-backdrop fade in task-input-modal-backdrop"></div>
+            <div class="modal fade in task-input-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-m">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="tim-header" style="margin: 0px;">Task Input Pending</h3>
+                            
+                            <pre id="tim-task-info"></pre>
+
+                        </div>
+                        <div class="modal-body">
+                            <div id="tim-progress" class="progress progress-striped active" style="margin-bottom:0;">
+                                <div class="progress-bar" style="width: 100%">
+                                </div>  
+                            </div>
+                            <button type="button" class="btn btn-success" onclick="taskInputComplete(false);">Submit Similar Task </br> <small>(keep form info)</small></button>
+                            <button type="button" class="btn btn-warning" onclick="taskInputComplete(true);">Done </br> <small>(clear form info)</small></button>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-horizontal">
 
 

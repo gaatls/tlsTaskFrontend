@@ -1,0 +1,47 @@
+body {
+    margin: 20px 10%;
+}
+
+legend {
+    text-align: center;
+}
+
+.task-input-modal {
+    display: none;
+    padding-top: 15%; 
+    overflow-y: visible; 
+    padding-right: 17px;
+
+    pre {
+        display: none;
+        font-size: 11px;
+    }
+    
+    button{
+        display: none;
+        float: right;
+        margin-left: 15px;
+    }
+
+    .modal-header,
+    .modal-body {
+        overflow: hidden;
+    }
+
+    #tim-task-info {
+        margin: 10px 0 10px;
+    }
+}
+
+.task-input-modal-backdrop {
+    display: none;
+}
+
+#professor-detail-input_hidden {
+    display: none;
+}
+
+#professor-detail-input_not-hidden {
+    display: block;
+}
+

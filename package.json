@@ -4,7 +4,9 @@
   "description": "Task input page for TLS services",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss-compile": "node-sass -w public -o public",
+    "watch": "npm run scss-compile"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,8 @@
     "jquery": "^3.1.0",
     "lodash": "^4.16.1",
     "moment": "^2.15.1",
+    "node-sass": "^3.10.0",
+    "scss-compile": "^0.1.7",
     "socket.io": "^1.4.8",
     "tls-asana": "git://github.com/gaatls/TLSasana.git#2d73229f4cb0b"
   }
