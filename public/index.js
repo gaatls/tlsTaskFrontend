@@ -17,8 +17,10 @@ socket.on('task-input-success', function(data){
     //do anything we need to do after a successful task input (notify user, give them next steps)
 });
 
-socket.on('task-input-failure', function(data){
+socket.on('task-input-failure', function(err, taskName, data){
+    console.log(err);
     console.log(data);
+    console.log(taskName);
     //do anything we need to do after a failed task input (notify user, give them next steps to retry entry or give error status telling them what went wrong????)
 });
 

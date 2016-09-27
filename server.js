@@ -49,12 +49,13 @@ function socketFormSubmission(socket, data){
     taskName = generateTaskName(data);
 
     tlsAsanaPromise.then(function(){
-        tlsAsana.createTask().then(response => {
+        tlsAsana.createTask(taskName, data).then(response => {
             console.log('Task created successfully');
             socket.emit('task-input-success', response);
         }).catch(err => {
-            reject(err);
             console.log(err);
+            socket.emit('task-input-failure', err, taskName, data);
+            reject(err);
         });
     });
 }
