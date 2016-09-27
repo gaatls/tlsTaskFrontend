@@ -24,7 +24,7 @@ io.on('connection', function (socket) {
     if(tlsAsana){
         tlsAsanaPromise = tlsAsana.connect('166216691534199').then(client => {
             console.log('Asana connected and setup');
-        });
+        }).catch(err => reject(err));
     }
   
     socket.emit('connected', "Successfully connected");
@@ -49,9 +49,12 @@ function socketFormSubmission(socket, data){
     taskName = generateTaskName(data);
 
     tlsAsanaPromise.then(function(){
-        tlsAsana.createTask(taskName, data).then(response => {
+        tlsAsana.createTask().then(response => {
             console.log('Task created successfully');
             socket.emit('task-input-success', response);
+        }).catch(err => {
+            reject(err);
+            console.log(err);
         });
     });
 }
