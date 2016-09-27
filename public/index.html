@@ -104,18 +104,21 @@
                     
                     <!-- Professor Name input-->
                     <div class="form-group">
-                    <label class="col-md-4 control-label" for="nameProfessor">Professor's Name</label>  
+                    <label for="nameProfessor" class="col-md-4 control-label" >Professor's Name</label>  
                         <div class="col-md-4">
                             <input id="nameProfessor" name="nameProfessor" type="text" placeholder="ex. Sam Jackson" class="form-control input-md">
+                            <div class="help-block">Full name of the course professor</div>
                         </div>
                     </div>
 
                     <!-- Professor Email input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="emailProfessor">Professor's Email</label>  
+                        <label for="emailProfessor" class="col-md-4 control-label">Professor's Email</label>  
                         <div class="col-md-4">
-                            <input id="emailProfessor" name="emailProfessor" type="email" placeholder="ex. sxjzzz@rit.edu" class="form-control input-md">
+                            <input id="emailProfessor" name="emailProfessor" type="email" placeholder="ex. sxjzzz@rit.edu" data-error="Email address is invalid" class="form-control input-md">
+                            <div class="help-block">Valid RIT email address of the course professor</div>
                         </div>
+                        <div class="col-md-4 help-block with-errors"></div>
                     </div>
 
                 </div>
