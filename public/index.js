@@ -2,6 +2,8 @@
 
 var addFieldsToData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
 //list the group name to select with jquery to get checkbox form values
+
+var addRadioToData = [];
 var addCheckBoxToData = ['type'];
 
 
@@ -39,7 +41,9 @@ $( document ).ready(function docReady(){
         }
     });
 
-    //-------SO snippet--------------
+    //-------SO snippet [http://stackoverflow.com/questions/9709209/html-select-only-one-checkbox-in-a-group]--------------
+    //we want the type to not have a default value but behave like a radio, not a checkbox (at most one should be selected at a time)
+
     // the selector will match all input controls of type :checkbox
         // and attach a click event handler 
         $("input:checkbox.type").on('click', function() {
@@ -56,12 +60,16 @@ $( document ).ready(function docReady(){
                 
                 $('#tls-type-custom-validate').prop('value','validated');
                 $('#tlsTaskForm').validator('validate');
-                console.log('now it should be validated');
+
+                //handle the rest of the form options that will appear after a type selection
+                handleTypeCheckboxSelection($box.prop('id'));
+
             } else {
                 $box.prop("checked", false);
                 $('#tls-type-custom-validate').prop('value','');
                 $('#tlsTaskForm').validator('validate');
-                console.log('now it should NOT be validated');
+
+                handleTypeCheckboxDeselection($box.prop('id') + "-form-group");
             }
         });
     //-----end SO snippet
@@ -79,6 +87,7 @@ function handFormSubmission(fields){
 
     data = filterFields(fields, data);
     data = filterCheckboxes(data);
+    data = filterRadios(data);
 
     //send our form data to the server
     socket.emit('form-submission', data);
@@ -109,7 +118,23 @@ function filterFields(fields, data){
  */
 function filterCheckboxes(data){
     _.forEach(addCheckBoxToData, function(x){
-        var el = $( 'input[name="type"]:checked' );
+        var el = $( 'input[name=' + x + ']:checked' );
+        
+        if(el){
+            data[x] = el[0].value;
+        }
+    })
+
+    return data;
+}
+
+
+/**
+ * 
+ */
+function filterRadios(data){
+    _.forEach(addRadioToData, function(x){
+        var el = $( 'input[name=' + x + ']:checked' );
         
         if(el){
             data[x] = el[0].value;
@@ -150,6 +175,45 @@ function handleRadioRequestMadeByProf(val){
        } 
     }
 }
+
+
+/**
+ * 
+ */
+function handleTypeCheckboxSelection(typeName){
+    console.log(typeName);
+
+    if(tlsTypeFormFields[typeName]){
+        var formData = tlsTypeFormFields[typeName];
+        var appendAfterElement = formData.appendAfter;
+        
+        addFieldNamesToCollectedData(formData);
+        $(appendAfterElement).after( formData.formHTMLString );
+    } else {
+        throw new TypeError('More details for that request type do not exist');
+    }
+}
+
+
+
+/**
+ * probably will not need this to be a separate function...if it just needs to be one line of jquery
+ * than we can move it back up to where it is called--we will wait to see if we need to do more things
+ * when the form group is removed.
+ */
+function handleTypeCheckboxDeselection(formGroupID){
+    $( '#' + formGroupID ).remove();
+}
+
+
+function addFieldNamesToCollectedData(formData){
+    if(formData.addRadioToData){
+        _.forEach(formData.addRadioToData, function(fieldName){
+            addRadioToData.push( fieldName );
+        });
+    }
+}
+
 
 
 /**
@@ -235,13 +299,15 @@ function processAsanaData(taskData){
         'Date/Time Created ': parsedExternalData.titleDate,
     }
 
-    //check for, and add, optional return data
-    if(parsedExternalData.nameProfessor){
-        returnData["Professor Name    "] = parsedExternalData.nameProfessor;
-    }
-    if(parsedExternalData.emailProfessor){
-        returnData["Professor Email   "] = parsedExternalData.emailProfessor;
-    }
+    //check for, and add, optional return data --- may not be the best way but this is the quickest way right now 
+    //i think in future I can have an optionalData object with the name that would get attached to 'parsedExternalData'
+    //and the name I want to include in the user message (ex: Professor Name)..and I could loop/logic check to see if 
+    //it was part of the task data and needs to be shown to the user.
+    if(parsedExternalData.nameProfessor) returnData["Professor Name    "] = parsedExternalData.nameProfessor;
+    if(parsedExternalData.emailProfessor) returnData["Professor Email   "] = parsedExternalData.emailProfessor;
+
+    if(parsedExternalData.onlineCourse) returnData["Online Course     "] = parsedExternalData.onlineCourse.toUpperCase();
+
 
     return returnData;
 }
@@ -263,3 +329,77 @@ function taskInputComplete(clear){
         handleRadioRequestMadeByProf("true");
     }
 }
+
+
+var tlsTypeFormFields = {
+    typeStreamingCaptioning: {
+        appendAfter: '#tls-type-form-group',
+        addRadioToData: ['onlineCourse'],
+        formHTMLString: "\
+            <div class='form-group' id='typeStreamingCaptioning-form-group'>\
+                <label class='col-md-4 control-label' for='onlineCourse'>Request for Online Course?</label>\
+                <div class='col-md-4'>\
+                    <div class='radio'>\
+                        <label for='onlineCourse'>\
+                            <input type='radio' name='onlineCourse' value='true'>Yes\
+                        </label>\
+                    </div>\
+                    \
+                    <div class='radio'>\
+                        <label for='onlineCourse'>\
+                            <input type='radio' name='onlineCourse' value='false' checked='checked'>No\
+                        </label>\
+                    </div>\
+                    \
+                </div>\
+            </div>\
+        "
+        // fields : [
+        //     {
+        //         name: 'onlineCourse',
+        //         formGroup: true,
+        //         groupLabel: 'Request for Online Course?',
+        //         options: [
+        //             {
+        //                 type: 'radio',
+        //                 name: 'onlineCourse',
+        //                 value: true,
+        //                 checked: "checked",
+        //                 label: 'Yes',
+        //                 id: null,
+        //                 onclick: null
+        //             },
+        //             {
+        //                 type: 'radio',
+        //                 name: 'onlineCourse',
+        //                 value: false,
+        //                 checked: false,
+        //                 label: 'No',
+        //                 id: null,
+        //                 onclick: null
+        //             },
+        //         ]
+
+        //     }
+        // ]
+    },
+    typeDVD: {
+
+    }, 
+    typeRecording: {
+
+    }
+}
+// var addFieldsToData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
+// //list the group name to select with jquery to get checkbox form values
+// var addRadioToData = [];
+// var addCheckBoxToData = ['type'];
+
+//Text
+//<input id="nameProfessor" name="nameProfessor" type="text" placeholder="ex. Sam Jackson" class="form-control input-md">
+
+//Checkbox
+//type="checkbox" class="type" name="type[1][]" id="typeDVD" value="DVD"
+
+//radio
+//<input type="radio" name="requestMadeByProf" id="requestMadeByProf-1" value="false" onclick="handleRadioRequestMadeByProf(this.value);">No
