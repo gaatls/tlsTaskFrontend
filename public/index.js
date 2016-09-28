@@ -53,6 +53,15 @@ $( document ).ready(function docReady(){
                 // the name of the box is retrieved using the .attr() method
                 // as it is assumed and expected to be immutable
                 var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                
+                //remove the additional form group that was visible from another 
+                //active checkbox in the group - hayden added
+                $(group).each(function(x){
+                    if( $(this).prop('checked') == true ){
+                        handleTypeCheckboxDeselection( $(this).prop('id') + "-form-group" );
+                    }
+                })
+                
                 // the checked state of the group/box on the other hand will change
                 // and the current value is retrieved using .prop() method
                 $(group).prop("checked", false);
@@ -207,9 +216,13 @@ function handleTypeCheckboxDeselection(formGroupID){
 
 
 function addFieldNamesToCollectedData(formData){
-    if(formData.addRadioToData){
-        _.forEach(formData.addRadioToData, function(fieldName){
-            addRadioToData.push( fieldName );
+    if(formData.addFieldsToData) pushFieldNames(addFieldsToData, formData.addFieldsToData);
+    if(formData.addCheckBoxToData) pushFieldNames(addCheckBoxToData, formData.addCheckBoxToData);
+    if(formData.addRadioToData) pushFieldNames(addRadioToData, formData.addRadioToData);
+    
+    function pushFieldNames(arrayToPushTo, fieldNameArr){
+        _.forEach(fieldNameArr, function(fieldName){
+            arrayToPushTo.push( fieldName );
         });
     }
 }
@@ -306,8 +319,9 @@ function processAsanaData(taskData){
     if(parsedExternalData.nameProfessor) returnData["Professor Name    "] = parsedExternalData.nameProfessor;
     if(parsedExternalData.emailProfessor) returnData["Professor Email   "] = parsedExternalData.emailProfessor;
 
+    if(parsedExternalData.captioningRequested) returnData["Captioning Req    "] = parsedExternalData.captioningRequested.toUpperCase();
     if(parsedExternalData.onlineCourse) returnData["Online Course     "] = parsedExternalData.onlineCourse.toUpperCase();
-
+    if(parsedExternalData.videoType) returnData["Video Type        "] = parsedExternalData.videoType;
 
     return returnData;
 }
@@ -334,9 +348,30 @@ function taskInputComplete(clear){
 var tlsTypeFormFields = {
     typeStreamingCaptioning: {
         appendAfter: '#tls-type-form-group',
-        addRadioToData: ['onlineCourse'],
+        addFieldsToData: ['videoType'],
+        addRadioToData: ['captioningRequested','onlineCourse'],
         formHTMLString: "\
-            <div class='form-group' id='typeStreamingCaptioning-form-group'>\
+        <div class='tls-hidden-group-large' id=''>\
+            <!--Captioning Requested Radio Selection -->\
+            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
+                <label class='col-md-4 control-label' for='captioningRequested'>Captioning Service Requested?</label>\
+                <div class='col-md-4'>\
+                    <div class='radio'>\
+                        <label for='captioningRequested'>\
+                            <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes\
+                        </label>\
+                    </div>\
+                    \
+                    <div class='radio'>\
+                        <label for='captioningRequested'>\
+                            <input type='radio' name='captioningRequested' value='false'>No\
+                        </label>\
+                    </div>\
+                    \
+                </div>\
+            </div>\
+            <!--Online Course Radio Selection -->\
+            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
                 <label class='col-md-4 control-label' for='onlineCourse'>Request for Online Course?</label>\
                 <div class='col-md-4'>\
                     <div class='radio'>\
@@ -353,35 +388,16 @@ var tlsTypeFormFields = {
                     \
                 </div>\
             </div>\
+            <!--Video Type input -->\
+            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
+                <label class='col-md-4 control-label' for='videoType'>Video type</label>\
+                <div class='col-md-4'>\
+                    <input id='videoType' name='videoType' type='text' placeholder='ex. John Smith' class='form-control input-md' required>\
+                    <div class='help-block'>Type of video</div>\
+                </div>\
+            </div>\
+        </div>\
         "
-        // fields : [
-        //     {
-        //         name: 'onlineCourse',
-        //         formGroup: true,
-        //         groupLabel: 'Request for Online Course?',
-        //         options: [
-        //             {
-        //                 type: 'radio',
-        //                 name: 'onlineCourse',
-        //                 value: true,
-        //                 checked: "checked",
-        //                 label: 'Yes',
-        //                 id: null,
-        //                 onclick: null
-        //             },
-        //             {
-        //                 type: 'radio',
-        //                 name: 'onlineCourse',
-        //                 value: false,
-        //                 checked: false,
-        //                 label: 'No',
-        //                 id: null,
-        //                 onclick: null
-        //             },
-        //         ]
-
-        //     }
-        // ]
     },
     typeDVD: {
 
