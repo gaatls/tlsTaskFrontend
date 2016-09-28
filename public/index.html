@@ -126,31 +126,38 @@
 
 
                 <!-- Request Type input -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="type">Request type</label>
-                    <div class="col-md-4">
+                <div class='form-group'>
+                    <input data-validate="true" required data-error="Email address is invalid" class="tls-super-hidden" id="tls-type-custom-validate">
+                    
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="type">Request type</label>
+                            <div class="col-md-4">
+                                
 
-                        <div class="radio">
-                            <label for="typeStreamingCaptioning">
-                                <input type="radio" name="type" id="typeStreamingCaptioning" value="Streaming/Captioning">Streaming/Captioning
-                            </label>
+                                <div class="checkbox">
+                                    <label for="typeStreamingCaptioning">
+                                        <input type="checkbox" class="type" name="type[1][]" id="typeStreamingCaptioning" value="Streaming/Captioning">Streaming/Captioning
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label for="typeDVD">
+                                        <input type="checkbox" class="type" name="type[1][]" id="typeDVD" value="DVD">DVD
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label for="typeRecording">
+                                        <input type="checkbox" class="type" name="type[1][]" id="typeRecording" value="Recording">Recording
+                                    </label>
+                            
+                                </div>
+                                <div class="help-block">Choose a request type</div>
+                            </div>
                         </div>
-
-                        <div class="radio">
-                            <label for="typeDVD">
-                                <input type="radio" name="type" id="typeDVD" value="DVD">DVD
-                            </label>
-                        </div>
-
-                        <div class="radio">
-                            <label for="typeRecording">
-                                <input type="radio" name="type" id="typeRecording" value="Recording">Recording
-                            </label>
-                        </div>
-
-                    </div>
+                    </input>
+                    <div class="col-md-4 help-block with-errors tls-super-hidden"></div>
                 </div>
-
 
 
                 <!-- Form Submit -->

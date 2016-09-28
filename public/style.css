@@ -9,20 +9,27 @@ legend {
   padding-top: 15%;
   overflow-y: visible;
   padding-right: 17px; }
-  .task-input-modal pre {
-    display: none;
-    font-size: 11px; }
-  .task-input-modal button {
-    display: none;
-    float: right;
-    margin-left: 15px; }
-  .task-input-modal .modal-header,
-  .task-input-modal .modal-body {
-    overflow: hidden; }
-  .task-input-modal #tim-task-info {
-    margin: 10px 0 10px; }
+
+.task-input-modal pre {
+  display: none;
+  font-size: 11px; }
+
+.task-input-modal button {
+  display: none;
+  float: right;
+  margin-left: 15px; }
+
+.task-input-modal .modal-header,
+.task-input-modal .modal-body {
+  overflow: hidden; }
+
+.task-input-modal #tim-task-info {
+  margin: 10px 0 10px; }
 
 .task-input-modal-backdrop {
+  display: none; }
+
+.tls-super-hidden {
   display: none; }
 
 #professor-detail-input_hidden {
