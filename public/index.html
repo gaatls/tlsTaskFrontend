@@ -48,8 +48,8 @@
 
                 <!-- Requester Name input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="nameRequester">Requested by</label>  
-                    <div class="col-md-4">
+                    <label class="col-lg-12 control-label" for="nameRequester">Requested by</label>  
+                    <div class="col-lg-12">
                         <input id="nameRequester" name="nameRequester" type="text" placeholder="ex. John Smith" class="form-control input-md" required="">
                         <div class="help-block">Full name of the person making the request</div>
                     </div>
@@ -58,20 +58,27 @@
 
                 <!-- Requester Email input-->
                 <div class="form-group">
-                    <label for="emailRequester" class="col-md-4 control-label">RIT Email</label>
-                    <div class="col-md-4">
+                    <label for="emailRequester" class="col-lg-12 control-label">RIT Email</label>
+                    <div class="col-lg-12">
                         <input type="email" class="form-control" id="emailRequester" placeholder="ex. jxszzz@rit.edu" data-error="Email address is invalid" required>
                         <div class="help-block">Valid RIT email address of the person making the request</div>
                     </div>
-                    <div class="col-md-4 help-block with-errors"></div>
+                    <div class="col-lg-12 help-block with-errors"></div>
                 </div>
 
                 
                 <!-- Course ID input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="courseID">Valid Course ID</label>  
-                    <div class="col-md-4">
+                    <label class="col-lg-12 control-label" for="courseID">Valid Course ID</label>  
+                    <div class="col-lg-12 entry">
                         <input id="courseID" name="courseID" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md" required="">
+                        
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                        
                         <div class="help-block">Valid course ID for the request</div>
                     </div>
                 </div>
@@ -79,8 +86,8 @@
 
                 <!-- Request from Course Teacher(?) radios -->
                 <div class="form-group" id="tls-reqFrmProf-form-group">
-                    <label class="col-md-4 control-label" for="requestMadeByProf">Request from Course Professor?</label>
-                    <div class="col-md-4">
+                    <label class="col-lg-12 control-label" for="requestMadeByProf">Request from Course Professor?</label>
+                    <div class="col-lg-12">
 
                         <div class="radio">
                             <label for="requestMadeByProf-0">
@@ -106,8 +113,8 @@
                     <input data-validate="true" required data-error="Email address is invalid" class="tls-super-hidden" id="tls-type-custom-validate">
                     
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="type">Request type</label>
-                            <div class="col-md-4">
+                            <label class="col-lg-12 control-label" for="type">Request type</label>
+                            <div class="col-lg-12">
                                 
 
                                 <div class="checkbox">
@@ -132,15 +139,15 @@
                             </div>
                         </div>
                     </input>
-                    <div class="col-md-4 help-block with-errors tls-super-hidden"></div>
+                    <div class="col-lg-12 help-block with-errors tls-super-hidden"></div>
                 </div>
 
 
                 <!-- Form Submit -->
                 <div class="form-group">
-                    <div class="col-md-4">
+                    <div class="col-lg-12">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-12">
                         <button type="submit" class="btn btn-primary disabled">Submit</button>
                     </div>
                 </div>

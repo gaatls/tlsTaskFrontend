@@ -1,8 +1,15 @@
 body {
-  margin: 20px 10%; }
+  margin: 20px 60px 20px 15px; }
+
+#tlsTaskForm {
+  max-width: 400px;
+  margin: 0 auto; }
 
 legend {
   text-align: center; }
+
+.form-horizontal .control-label {
+  text-align: left; }
 
 .task-input-modal {
   display: none;
@@ -42,3 +49,14 @@ legend {
 
 #tls-type-form-group {
   margin: 0; }
+
+.entry:not(:first-of-type) {
+  margin-top: 10px; }
+
+.glyphicon {
+  font-size: 12px; }
+
+.input-group-btn {
+  position: absolute;
+  top: 0%;
+  right: 0; }
