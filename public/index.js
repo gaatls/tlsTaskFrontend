@@ -1,6 +1,6 @@
 'use strict';
 
-var addFieldsToData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
+var addFieldsToData = ['nameRequester','emailRequester','courseID'];
 //list the group name to select with jquery to get checkbox form values
 
 var addRadioToData = [];
@@ -44,7 +44,7 @@ $( document ).ready(function docReady(){
     //-------SO snippet [http://stackoverflow.com/questions/9709209/html-select-only-one-checkbox-in-a-group]--------------
     //we want the type to not have a default value but behave like a radio, not a checkbox (at most one should be selected at a time)
 
-    // the selector will match all input controls of type :checkbox
+        // the selector will match all input controls of type :checkbox
         // and attach a click event handler 
         $("input:checkbox.type").on('click', function() {
             // in the handler, 'this' refers to the box clicked on
@@ -57,8 +57,8 @@ $( document ).ready(function docReady(){
                 //remove the additional form group that was visible from another 
                 //active checkbox in the group - hayden added
                 $(group).each(function(x){
-                    if( $(this).prop('checked') == true ){
-                        handleTypeCheckboxDeselection( $(this).prop('id') + "-form-group" );
+                    if( $(this).prop('checked') == true && $(this)[0] != $box[0] ){
+                        handleAddedGroupDeselection( $(this).prop('id'), $(this).prop('id') + "-form-group" );
                     }
                 })
                 
@@ -66,22 +66,34 @@ $( document ).ready(function docReady(){
                 // and the current value is retrieved using .prop() method
                 $(group).prop("checked", false);
                 $box.prop("checked", true);
-                
-                $('#tls-type-custom-validate').prop('value','validated');
+
+                $('#tls-type-custom-validate').prop('value','nonimportant value to make validate');
                 $('#tlsTaskForm').validator('validate');
 
                 //handle the rest of the form options that will appear after a type selection
-                handleTypeCheckboxSelection($box.prop('id'));
+                handleAddedGroupSelection($box.prop('id'));
 
             } else {
                 $box.prop("checked", false);
                 $('#tls-type-custom-validate').prop('value','');
                 $('#tlsTaskForm').validator('validate');
 
-                handleTypeCheckboxDeselection($box.prop('id') + "-form-group");
+                handleAddedGroupDeselection($box.prop('id'), $box.prop('id') + "-form-group");
             }
         });
     //-----end SO snippet
+
+        // the selector will match all input controls of type :radio
+        // and attach a click event handler 
+        $("input:radio.requestProf").on('click', function() {
+            // in the handler, 'this' refers to the box clicked on
+            var $box = $(this);
+            if ($box.prop("id") === "radio-adds-form") {
+                handleAddedGroupSelection($box.prop('class'));
+            } else {
+                handleAddedGroupDeselection($box.prop('class'),$box.prop('class') + "-form-group");
+            }
+        });
     
 });
 
@@ -155,43 +167,13 @@ function filterRadios(data){
 
 
 
-var deletedFormValues = {};
-/**
- * Shows field when radio button is toggled...may be better/more efficient way to
- * do with bootstrap but I couldn't find it so I'm moving on.
- * 
- * @param {string} val String value stored on the toggled radio button
- */
-function handleRadioRequestMadeByProf(val){
-    var el;
-    
-    if(val === "true"){
-       el = $('#professor-detail-input_not-hidden')
-       
-       el.attr('id','professor-detail-input_hidden');
-       el.find('input').attr("required", false);
-
-       clearFormFields(['nameProfessor', 'emailProfessor']);
-    }
-    else{
-       el = $('#professor-detail-input_hidden');
-
-       el.attr('id','professor-detail-input_not-hidden');
-       el.find('input').attr("required", true);
-
-       if(deletedFormValues){
-           restoreDeletedValues(['nameProfessor', 'emailProfessor'], deletedFormValues);
-       } 
-    }
-}
-
 
 /**
  * 
  */
-function handleTypeCheckboxSelection(typeName){
+function handleAddedGroupSelection(typeName){
     console.log(typeName);
-
+    
     if(tlsTypeFormFields[typeName]){
         var formData = tlsTypeFormFields[typeName];
         var appendAfterElement = formData.appendAfter;
@@ -210,8 +192,15 @@ function handleTypeCheckboxSelection(typeName){
  * than we can move it back up to where it is called--we will wait to see if we need to do more things
  * when the form group is removed.
  */
-function handleTypeCheckboxDeselection(formGroupID){
-    $( '#' + formGroupID ).remove();
+function handleAddedGroupDeselection(formGroupJSONID, formGroupID){
+    $( '.' + formGroupID ).remove();
+
+    if(tlsTypeFormFields[formGroupJSONID]){
+        removeFieldNamesFromCollectedData( tlsTypeFormFields[formGroupJSONID] );
+    }
+    else{
+        throw new TypeError("Form group does not exist to be removed");
+    } 
 }
 
 
@@ -228,34 +217,19 @@ function addFieldNamesToCollectedData(formData){
 }
 
 
+function removeFieldNamesFromCollectedData(formData){
+    if(formData.addFieldsToData) sliceFieldNames(addFieldsToData, formData.addFieldsToData);
+    if(formData.addCheckBoxToData) sliceFieldNames(addCheckBoxToData, formData.addCheckBoxToData);
+    if(formData.addRadioToData) sliceFieldNames(addRadioToData, formData.addRadioToData);
+    
+    function sliceFieldNames(arrayToSliceFrom, fieldNameArr){
+        var cut = _.remove(arrayToSliceFrom, function(n){
+           console.log(n);
+           return _.includes(fieldNameArr, n);
+        });
 
-/**
- * 
- */
-function clearFormFields(fields){
-
-    _.forEach(fields, function(x){
-        var el = $('#' + x);
-
-        if(el){
-            deletedFormValues[x] = el[0].value;
-            el[0].value = "";
-        }
-    })
-}
-
-
-/**
- * 
- */
-function restoreDeletedValues(fields, values){
-     _.forEach(fields, function(x){
-        var el = $('#' + x);
-
-        if(el && values[x]){
-            el[0].value = values[x];
-        }
-    })
+        console.log(cut);
+    }
 }
 
 
@@ -346,6 +320,37 @@ function taskInputComplete(clear){
 
 
 var tlsTypeFormFields = {
+    ['requestProf']: {
+        appendAfter: '#tls-reqFrmProf-form-group',
+        addFieldsToData: ['nameProfessor', 'emailProfessor'],
+        formHTMLString: "\
+        <!-- Hidden unless the radio above is set to 'no' -->\
+                <div class='tls-hidden-group-large requestProf-form-group' id='professor-detail-input_hidden'>\
+                    \
+                    <!-- Professor Name input-->\
+                    <div class='form-group tls-indented'>\
+                    <label for='nameProfessor' class='col-md-4 control-label' >Professor's Name</label>\
+                        <div class='col-md-4'>\
+                            <input id='nameProfessor' name='nameProfessor' type='text' placeholder='ex. Sam Jackson' class='form-control input-md'>\
+                            <div class='help-block'>Full name of the course professor</div>\
+                        </div>\
+                    </div>\
+                    \
+                    <!-- Professor Email input-->\
+                    <div class='form-group tls-indented'>\
+                        <label for='emailProfessor' class='col-md-4 control-label'>Professor's Email</label>\
+                        <div class='col-md-4'>\
+                            <input id='emailProfessor' name='emailProfessor' type='email' placeholder='ex. sxjzzz@rit.edu' data-error='Email address is invalid' class='form-control input-md'>\
+                            <div class='help-block'>Valid RIT email address of the course professor</div>\
+                        </div>\
+                        <div class='col-md-4 help-block with-errors'></div>\
+                    </div>\
+                    \
+                </div>\
+        "
+    },
+    
+    
     typeStreamingCaptioning: {
         appendAfter: '#tls-type-form-group',
         addFieldsToData: ['videoType'],
@@ -353,7 +358,7 @@ var tlsTypeFormFields = {
         formHTMLString: "\
         <div class='tls-hidden-group-large' id=''>\
             <!--Captioning Requested Radio Selection -->\
-            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
+            <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
                 <label class='col-md-4 control-label' for='captioningRequested'>Captioning Service Requested?</label>\
                 <div class='col-md-4'>\
                     <div class='radio'>\
@@ -371,7 +376,7 @@ var tlsTypeFormFields = {
                 </div>\
             </div>\
             <!--Online Course Radio Selection -->\
-            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
+            <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
                 <label class='col-md-4 control-label' for='onlineCourse'>Request for Online Course?</label>\
                 <div class='col-md-4'>\
                     <div class='radio'>\
@@ -389,7 +394,7 @@ var tlsTypeFormFields = {
                 </div>\
             </div>\
             <!--Video Type input -->\
-            <div class='form-group tls-indented' id='typeStreamingCaptioning-form-group'>\
+            <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
                 <label class='col-md-4 control-label' for='videoType'>Video type</label>\
                 <div class='col-md-4'>\
                     <input id='videoType' name='videoType' type='text' placeholder='ex. John Smith' class='form-control input-md' required>\

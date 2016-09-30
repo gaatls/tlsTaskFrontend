@@ -78,19 +78,19 @@
 
 
                 <!-- Request from Course Teacher(?) radios -->
-                <div class="form-group">
+                <div class="form-group" id="tls-reqFrmProf-form-group">
                     <label class="col-md-4 control-label" for="requestMadeByProf">Request from Course Professor?</label>
                     <div class="col-md-4">
 
                         <div class="radio">
                             <label for="requestMadeByProf-0">
-                                <input type="radio" name="requestMadeByProf" id="requestMadeByProf-0" value="true" checked="checked" onclick="handleRadioRequestMadeByProf(this.value);">Yes
+                                <input type="radio" class="requestProf" name="requestMadeByProf" value="true" checked="checked">Yes
                             </label>
                         </div>
 
                         <div class="radio">
                             <label for="requestMadeByProf-1">
-                                <input type="radio" name="requestMadeByProf" id="requestMadeByProf-1" value="false" onclick="handleRadioRequestMadeByProf(this.value);">No
+                                <input type="radio" class="requestProf" name="requestMadeByProf" id="radio-adds-form" value="false">No
                             </label>
                         </div>
 
@@ -98,29 +98,6 @@
                 </div>
 
 
-                <!-- Hidden unless the radio above is set to 'no' -->
-                <div class="tls-hidden-group-large" id="professor-detail-input_hidden">
-                    
-                    <!-- Professor Name input-->
-                    <div class="form-group tls-indented">
-                    <label for="nameProfessor" class="col-md-4 control-label" >Professor's Name</label>  
-                        <div class="col-md-4">
-                            <input id="nameProfessor" name="nameProfessor" type="text" placeholder="ex. Sam Jackson" class="form-control input-md">
-                            <div class="help-block">Full name of the course professor</div>
-                        </div>
-                    </div>
-
-                    <!-- Professor Email input-->
-                    <div class="form-group tls-indented">
-                        <label for="emailProfessor" class="col-md-4 control-label">Professor's Email</label>  
-                        <div class="col-md-4">
-                            <input id="emailProfessor" name="emailProfessor" type="email" placeholder="ex. sxjzzz@rit.edu" data-error="Email address is invalid" class="form-control input-md">
-                            <div class="help-block">Valid RIT email address of the course professor</div>
-                        </div>
-                        <div class="col-md-4 help-block with-errors"></div>
-                    </div>
-
-                </div>
 
 
 
