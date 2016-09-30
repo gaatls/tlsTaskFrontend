@@ -1,10 +1,26 @@
 'use strict';
 
-var addFieldsToData = ['nameRequester','emailRequester','courseID'];
-//list the group name to select with jquery to get checkbox form values
-
+var addFieldsToData = [
+    {
+        id: 'nameRequester',
+        readName: null
+    },
+    {
+        id: 'emailRequester',
+        readName: null
+    },
+    {
+        id: 'courseID',
+        readName: null
+    }
+];
 var addRadioToData = [];
-var addCheckBoxToData = ['type'];
+var addCheckBoxToData = [
+    {
+        id:'type',
+        readName: null
+    }
+];
 
 
 var socket = io.connect('http://localhost:8001');
@@ -58,7 +74,7 @@ $( document ).ready(function docReady(){
                 //active checkbox in the group - hayden added
                 $(group).each(function(x){
                     if( $(this).prop('checked') == true && $(this)[0] != $box[0] ){
-                        handleAddedGroupDeselection( $(this).prop('id'), $(this).prop('id') + "-form-group" );
+                        handleAddedGroupDeselection( $(this).prop('id') );
                     }
                 })
                 
@@ -78,7 +94,7 @@ $( document ).ready(function docReady(){
                 $('#tls-type-custom-validate').prop('value','');
                 $('#tlsTaskForm').validator('validate');
 
-                handleAddedGroupDeselection($box.prop('id'), $box.prop('id') + "-form-group");
+                handleAddedGroupDeselection( $box.prop('id') );
             }
         });
     //-----end SO snippet
@@ -91,7 +107,7 @@ $( document ).ready(function docReady(){
             if ($box.prop("id") === "radio-adds-form") {
                 handleAddedGroupSelection($box.prop('class'));
             } else {
-                handleAddedGroupDeselection($box.prop('class'),$box.prop('class') + "-form-group");
+                handleAddedGroupDeselection( $box.prop('class') );
             }
         });
     
@@ -120,13 +136,20 @@ function handFormSubmission(fields){
  * 
  */
 function filterFields(fields, data){
-    var filteredFormFields = _.filter(fields, function(x){
-       return _.includes(addFieldsToData, x.id);
-    });
+    // var filteredFormFields = _.filter(fields, function(x){
+    //    return _.includes(addFieldsToData, x.id);
+    // });
 
-    _.forEach(filteredFormFields, function(x){
-        if(x.value){
-            data[x.id] = x.value;
+    // _.forEach(filteredFormFields, function(x){
+    //     if(x.value){
+    //         data[x.id] = x.value;
+    //     }
+    // })
+    _.forEach(addFieldsToData, function(x){
+        var el = $( '#' + x.id );
+        
+        if(el){
+            data[x.id] = el[0].value;
         }
     })
 
@@ -139,10 +162,10 @@ function filterFields(fields, data){
  */
 function filterCheckboxes(data){
     _.forEach(addCheckBoxToData, function(x){
-        var el = $( 'input[name=' + x + ']:checked' );
+        var el = $( 'input[name=' + x.id + ']:checked' );
         
         if(el){
-            data[x] = el[0].value;
+            data[x.id] = el[0].value;
         }
     })
 
@@ -155,10 +178,10 @@ function filterCheckboxes(data){
  */
 function filterRadios(data){
     _.forEach(addRadioToData, function(x){
-        var el = $( 'input[name=' + x + ']:checked' );
+        var el = $( 'input[name=' + x.id + ']:checked' );
         
         if(el){
-            data[x] = el[0].value;
+            data[x.id] = el[0].value;
         }
     })
 
@@ -192,8 +215,8 @@ function handleAddedGroupSelection(typeName){
  * than we can move it back up to where it is called--we will wait to see if we need to do more things
  * when the form group is removed.
  */
-function handleAddedGroupDeselection(formGroupJSONID, formGroupID){
-    $( '.' + formGroupID ).remove();
+function handleAddedGroupDeselection(formGroupJSONID){
+    $( '.' + formGroupJSONID + "-form-group" ).remove();
 
     if(tlsTypeFormFields[formGroupJSONID]){
         removeFieldNamesFromCollectedData( tlsTypeFormFields[formGroupJSONID] );
@@ -205,31 +228,16 @@ function handleAddedGroupDeselection(formGroupJSONID, formGroupID){
 
 
 function addFieldNamesToCollectedData(formData){
-    if(formData.addFieldsToData) pushFieldNames(addFieldsToData, formData.addFieldsToData);
-    if(formData.addCheckBoxToData) pushFieldNames(addCheckBoxToData, formData.addCheckBoxToData);
-    if(formData.addRadioToData) pushFieldNames(addRadioToData, formData.addRadioToData);
-    
-    function pushFieldNames(arrayToPushTo, fieldNameArr){
-        _.forEach(fieldNameArr, function(fieldName){
-            arrayToPushTo.push( fieldName );
-        });
-    }
+    if(formData.addFieldsToData) addFieldsToData = _.unionWith(addFieldsToData, formData.addFieldsToData);
+    if(formData.addCheckBoxToData) addCheckBoxToData = _.unionWith(addCheckBoxToData, formData.addCheckBoxToData);
+    if(formData.addRadioToData) addRadioToData = _.unionWith(addRadioToData, formData.addRadioToData);
 }
 
 
 function removeFieldNamesFromCollectedData(formData){
-    if(formData.addFieldsToData) sliceFieldNames(addFieldsToData, formData.addFieldsToData);
-    if(formData.addCheckBoxToData) sliceFieldNames(addCheckBoxToData, formData.addCheckBoxToData);
-    if(formData.addRadioToData) sliceFieldNames(addRadioToData, formData.addRadioToData);
-    
-    function sliceFieldNames(arrayToSliceFrom, fieldNameArr){
-        var cut = _.remove(arrayToSliceFrom, function(n){
-           console.log(n);
-           return _.includes(fieldNameArr, n);
-        });
-
-        console.log(cut);
-    }
+    if(formData.addFieldsToData) _.pullAllWith(addFieldsToData, formData.addFieldsToData);
+    if(formData.addCheckBoxToData) _.pullAllWith(addCheckBoxToData, formData.addCheckBoxToData);
+    if(formData.addRadioToData) _.pullAllWith(addRadioToData, formData.addRadioToData);
 }
 
 
@@ -276,26 +284,22 @@ function taskInputSuccessRevert(){
  */
 function processAsanaData(taskData){
     var parsedExternalData = JSON.parse(taskData.external.data);
-    
+    var combinedDataFields = _.unionWith(addFieldsToData, addCheckBoxToData, addRadioToData);
+
     var returnData = {
         'Task Name         ': taskData.name,
         'Requested by      ': parsedExternalData.nameRequester,
         'RIT Email         ': parsedExternalData.emailRequester,
         'Course ID         ': parsedExternalData.courseID,
-        'Request Type      ': parsedExternalData.type,
+        'Type              ': parsedExternalData.type,
         'Date/Time Created ': parsedExternalData.titleDate,
     }
 
-    //check for, and add, optional return data --- may not be the best way but this is the quickest way right now 
-    //i think in future I can have an optionalData object with the name that would get attached to 'parsedExternalData'
-    //and the name I want to include in the user message (ex: Professor Name)..and I could loop/logic check to see if 
-    //it was part of the task data and needs to be shown to the user.
-    if(parsedExternalData.nameProfessor) returnData["Professor Name    "] = parsedExternalData.nameProfessor;
-    if(parsedExternalData.emailProfessor) returnData["Professor Email   "] = parsedExternalData.emailProfessor;
-
-    if(parsedExternalData.captioningRequested) returnData["Captioning Req    "] = parsedExternalData.captioningRequested.toUpperCase();
-    if(parsedExternalData.onlineCourse) returnData["Online Course     "] = parsedExternalData.onlineCourse.toUpperCase();
-    if(parsedExternalData.videoType) returnData["Video Type        "] = parsedExternalData.videoType;
+    _.forEach(combinedDataFields, function(x){
+        if(x.readName != null){
+            returnData[x.readName] = parsedExternalData[x.id];
+        }
+    })
 
     return returnData;
 }
@@ -322,7 +326,7 @@ function taskInputComplete(clear){
 var tlsTypeFormFields = {
     ['requestProf']: {
         appendAfter: '#tls-reqFrmProf-form-group',
-        addFieldsToData: ['nameProfessor', 'emailProfessor'],
+        addFieldsToData: [{id:'nameProfessor',readName:"Professor Name    "},{id:'emailProfessor',readName:"Professor Email   "}],
         formHTMLString: "\
         <!-- Hidden unless the radio above is set to 'no' -->\
                 <div class='tls-hidden-group-large requestProf-form-group' id='professor-detail-input_hidden'>\
@@ -353,8 +357,8 @@ var tlsTypeFormFields = {
     
     typeStreamingCaptioning: {
         appendAfter: '#tls-type-form-group',
-        addFieldsToData: ['videoType'],
-        addRadioToData: ['captioningRequested','onlineCourse'],
+        addFieldsToData: [{id:'videoType',readName:"Video Type        "}],
+        addRadioToData: [{id:'captioningRequested',readName:"Captioning Req    "},{id:'onlineCourse',readName:"Online Course     "}],
         formHTMLString: "\
         <div class='tls-hidden-group-large' id=''>\
             <!--Captioning Requested Radio Selection -->\
