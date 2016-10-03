@@ -171,20 +171,34 @@ function handFormSubmission(fields){
  * 
  */
 function filterFields(fields, data){
-    // var filteredFormFields = _.filter(fields, function(x){
-    //    return _.includes(addFieldsToData, x.id);
-    // });
 
-    // _.forEach(filteredFormFields, function(x){
-    //     if(x.value){
-    //         data[x.id] = x.value;
-    //     }
-    // })
     _.forEach(addFieldsToData, function(x){
-        var el = $( '#' + x.id );
-        
-        if(el){
-            data[x.id] = el[0].value;
+        if(x.class){
+            var valueArray = [];
+            var els = $( '.' + x.class );
+
+            if(els){
+                els.each(function(){
+                    valueArray.push( $(this)[0].value );
+                })
+
+                console.log(valueArray);
+                data[x.class] = JSON.stringify( valueArray );
+            }
+            else {
+                throw new TypeError("Field values not found");
+            }
+
+        }
+        else {
+            var el = $( '#' + x.id );
+            
+            if(el){
+                data[x.id] = el[0].value;
+            }
+            else {
+                throw new TypeError("Field value not found");
+            }
         }
     })
 
@@ -338,12 +352,17 @@ function processAsanaData(taskData){
         'RIT Email         ': parsedExternalData.emailRequester,
         'Course ID         ': parsedExternalData.courseID,
         'Type              ': parsedExternalData.type,
-        'Date/Time Created ': parsedExternalData.titleDate,
+        'Date/Time Created ': parsedExternalData.titleDate
     }
 
     _.forEach(combinedDataFields, function(x){
         if(x.readName != null){
-            returnData[x.readName] = parsedExternalData[x.id];
+            if(x.class){
+                returnData[x.readName] = parsedExternalData[x.class];
+            }
+            else {
+                returnData[x.readName] = parsedExternalData[x.id];
+            }
         }
     })
 
@@ -385,7 +404,7 @@ var tlsTypeFormFields = {
     
     
     typeStreamingCaptioning: {
-        addFieldsToData: [{id:'videoType',readName:"Video Type        "}],
+        addFieldsToData: [{id:'videoType',readName:"Video Type        "},{class:'videoTitleOrLink-multiple',readName:'Video Titles/URLs '}],
         addRadioToData: [{id:'captioningRequested',readName:"Captioning Req    "},{id:'onlineCourse',readName:"Online Course     "}],
         divClassName: "typeStreamingCaptioning-form-group",
         requiredInputNames: ['videoType']
