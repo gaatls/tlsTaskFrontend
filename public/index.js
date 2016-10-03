@@ -218,15 +218,19 @@ function filterRadios(data){
 /**
  * 
  */
-function handleAddedGroupSelection(typeName){
-    console.log(typeName);
+function handleAddedGroupSelection(formGroupName){
+    var formData = tlsTypeFormFields[formGroupName];
     
-    if(tlsTypeFormFields[typeName]){
-        var formData = tlsTypeFormFields[typeName];
-        var appendAfterElement = formData.appendAfter;
+    if(formData){
+        $( '.' + formData.divClassName ).removeClass('hidden')
+        
+        _.forEach(formData.requiredInputNames, function(inputName){
+            var requiredInput = $( '.' + formData.divClassName ).find("input[name=" + inputName + "]");
+           requiredInput.prop('required', true);
+        });
         
         addFieldNamesToCollectedData(formData);
-        $(appendAfterElement).after( formData.formHTMLString );
+
     } else {
         throw new TypeError('More details for that request type do not exist');
     }
@@ -239,11 +243,18 @@ function handleAddedGroupSelection(typeName){
  * than we can move it back up to where it is called--we will wait to see if we need to do more things
  * when the form group is removed.
  */
-function handleAddedGroupDeselection(formGroupJSONID){
-    $( '.' + formGroupJSONID + "-form-group" ).remove();
+function handleAddedGroupDeselection(formGroupName){
+    var formData = tlsTypeFormFields[formGroupName];
 
-    if(tlsTypeFormFields[formGroupJSONID]){
-        removeFieldNamesFromCollectedData( tlsTypeFormFields[formGroupJSONID] );
+    if(formData){
+        $( '.' + formData.divClassName ).addClass('hidden')
+        
+         _.forEach(formData.requiredInputNames, function(inputName){
+            var requiredInput = $( '.' + formData.divClassName ).find("input[name=" + inputName + "]");
+           requiredInput.prop('required', false);
+        });
+
+        removeFieldNamesFromCollectedData(formData);
     }
     else{
         throw new TypeError("Form group does not exist to be removed");
@@ -340,6 +351,13 @@ function taskInputComplete(clear){
             $(this).val("").css('background-color', '#fff !important');
         });
 
+        $('#tlsTaskForm').find("input[type=checkbox]").each(function(){
+            if( $(this).prop('checked', true) ){
+                handleAddedGroupDeselection( $(this).prop('id') );
+                $(this).prop('checked', false).button('refresh');
+            }
+        });
+
         $('#requestMadeByProf-1').prop('checked',false).button('refresh');
         $('#requestMadeByProf-0').prop('checked',true).button('refresh');
         handleRadioRequestMadeByProf("true");
@@ -349,88 +367,17 @@ function taskInputComplete(clear){
 
 var tlsTypeFormFields = {
     requestProf: {
-        appendAfter: '#tls-reqFrmProf-form-group',
         addFieldsToData: [{id:'nameProfessor',readName:"Professor Name    "},{id:'emailProfessor',readName:"Professor Email   "}],
-        formHTMLString: "\
-            <!-- Hidden unless the radio above is set to 'no' -->\
-            <div class='tls-hidden-group-large requestProf-form-group' id='professor-detail-input_hidden'>\
-                \
-                <!-- Professor Name input-->\
-                <div class='form-group tls-indented'>\
-                <label for='nameProfessor' class='col-md-4 control-label' >Professor's Name</label>\
-                    <div class='col-md-4'>\
-                        <input id='nameProfessor' name='nameProfessor' type='text' placeholder='ex. Sam Jackson' class='form-control input-md'>\
-                        <div class='help-block'>Full name of the course professor</div>\
-                    </div>\
-                </div>\
-                \
-                <!-- Professor Email input-->\
-                <div class='form-group tls-indented'>\
-                    <label for='emailProfessor' class='col-md-4 control-label'>Professor's Email</label>\
-                    <div class='col-md-4'>\
-                        <input id='emailProfessor' name='emailProfessor' type='email' placeholder='ex. sxjzzz@rit.edu' data-error='Email address is invalid' class='form-control input-md'>\
-                        <div class='help-block'>Valid RIT email address of the course professor</div>\
-                    </div>\
-                    <div class='col-md-4 help-block with-errors'></div>\
-                </div>\
-                \
-            </div>\
-        "
+        divClassName: "requestProf-form-group",
+        requiredInputNames: ['nameProfessor','emailProfessor']
     },
     
     
     typeStreamingCaptioning: {
-        appendAfter: '#tls-type-form-group',
         addFieldsToData: [{id:'videoType',readName:"Video Type        "}],
         addRadioToData: [{id:'captioningRequested',readName:"Captioning Req    "},{id:'onlineCourse',readName:"Online Course     "}],
-        formHTMLString: "\
-            <div class='tls-hidden-group-large' id=''>\
-                <!--Captioning Requested Radio Selection -->\
-                <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
-                    <label class='col-md-4 control-label' for='captioningRequested'>Captioning Service Requested?</label>\
-                    <div class='col-md-4'>\
-                        <div class='radio'>\
-                            <label for='captioningRequested'>\
-                                <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes\
-                            </label>\
-                        </div>\
-                        \
-                        <div class='radio'>\
-                            <label for='captioningRequested'>\
-                                <input type='radio' name='captioningRequested' value='false'>No\
-                            </label>\
-                        </div>\
-                        \
-                    </div>\
-                </div>\
-                <!--Online Course Radio Selection -->\
-                <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
-                    <label class='col-md-4 control-label' for='onlineCourse'>Request for Online Course?</label>\
-                    <div class='col-md-4'>\
-                        <div class='radio'>\
-                            <label for='onlineCourse'>\
-                                <input type='radio' name='onlineCourse' value='true'>Yes\
-                            </label>\
-                        </div>\
-                        \
-                        <div class='radio'>\
-                            <label for='onlineCourse'>\
-                                <input type='radio' name='onlineCourse' value='false' checked='checked'>No\
-                            </label>\
-                        </div>\
-                        \
-                    </div>\
-                </div>\
-                <!--Video Type input -->\
-                <div class='form-group tls-indented typeStreamingCaptioning-form-group'>\
-                    <label class='col-md-4 control-label' for='videoType'>Video type</label>\
-                    <div class='col-md-4'>\
-                        <input id='videoType' name='videoType' type='text' placeholder='ex. John Smith' class='form-control input-md' required>\
-                        <div class='help-block'>Type of video</div>\
-                    </div>\
-                </div>\
-            </div>\
-        "
+        divClassName: "typeStreamingCaptioning-form-group",
+        requiredInputNames: ['videoType']
     },
     typeDVD: {
 
