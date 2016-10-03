@@ -59,7 +59,24 @@ legend {
 .glyphicon {
   font-size: 12px; }
 
-.input-group-btn {
+.tls-muliple-plus-btn {
+  padding-left: 15px;
+  padding-top: 10px; }
+
+.tls-muliple-plus-btn .btn {
+  border-radius: 4px !important; }
+
+.tls-muliple-minus-btn {
   position: absolute;
   top: 0%;
   right: 0; }
+
+.tls-muliple-minus-btn .btn {
+  border-radius: 4px !important; }
+
+.control-sub-label {
+  color: #737373;
+  font-style: italic; }
+
+.form-group-multiple {
+  margin-bottom: 50px !important; }

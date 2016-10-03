@@ -87,8 +87,31 @@ legend {
     font-size: 12px;
 }
 
-.input-group-btn {
+.tls-muliple-plus-btn {
+    padding-left: 15px;
+    // padding-top: 10px;
+
+    .btn {
+        border-radius: 4px !important;
+    }
+}
+
+.tls-muliple-minus-btn {
     position: absolute;
     top: 0%;
     right: 0;
+
+    .btn {
+        border-radius: 4px !important;
+    }
+}
+
+
+.control-sub-label {
+    color: #737373;
+    font-style: italic;
+}
+
+.form-group-multiple {
+    margin-bottom: 50px !important;
 }

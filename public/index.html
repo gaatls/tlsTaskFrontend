@@ -71,14 +71,7 @@
                 <div class="form-group">
                     <label class="col-lg-12 control-label" for="courseID">Valid Course ID</label>  
                     <div class="col-lg-12 entry">
-                        <input id="courseID" name="courseID" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md" required="">
-                        
-                        <span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                        
+                        <input id="courseID" name="courseID" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md" required>
                         <div class="help-block">Valid course ID for the request</div>
                     </div>
                 </div>
@@ -109,8 +102,8 @@
                     
                     <!-- Professor Name input-->
                     <div class='form-group tls-indented'>
-                    <label for='nameProfessor' class='col-md-4 control-label' >Professor's Name</label>
-                        <div class='col-md-4'>
+                    <label for='nameProfessor' class='col-lg-12 control-label' >Professor's Name</label>
+                        <div class='col-lg-12'>
                             <input id='nameProfessor' name='nameProfessor' type='text' placeholder='ex. Sam Jackson' class='form-control input-md'>
                             <div class='help-block'>Full name of the course professor</div>
                         </div>
@@ -118,12 +111,12 @@
                     
                     <!-- Professor Email input-->
                     <div class='form-group tls-indented'>
-                        <label for='emailProfessor' class='col-md-4 control-label'>Professor's Email</label>
-                        <div class='col-md-4'>
+                        <label for='emailProfessor' class='col-lg-12 control-label'>Professor's Email</label>
+                        <div class='col-lg-12'>
                             <input id='emailProfessor' name='emailProfessor' type='email' placeholder='ex. sxjzzz@rit.edu' data-error='Email address is invalid' class='form-control input-md'>
                             <div class='help-block'>Valid RIT email address of the course professor</div>
                         </div>
-                        <div class='col-md-4 help-block with-errors'></div>
+                        <div class='col-lg-12 help-block with-errors'></div>
                     </div>
                     
                 </div>
@@ -164,56 +157,85 @@
                     <div class="col-lg-12 help-block with-errors tls-super-hidden"></div>
                 </div>
 
-                <div class='tls-group-large typeStreamingCaptioning-form-group hidden' id=''>
-                    <!--Captioning Requested Radio Selection -->
-                    <div class='form-group tls-indented'>
-                        <label class='col-md-4 control-label' for='captioningRequested'>Captioning Service Requested?</label>
-                        <div class='col-md-4'>
-                            <div class='radio'>
-                                <label for='captioningRequested'>
-                                    <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes
-                                </label>
+                <!-- hidden unless streaming/captioning checkbox is selected -->
+                        <div class='tls-group-large typeStreamingCaptioning-form-group hidden'>
+
+                            <!--Captioning Requested Radio Selection -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='captioningRequested'>Captioning Service Requested?</label>
+                                <div class='col-lg-12'>
+                                    <div class='radio'>
+                                        <label for='captioningRequested'>
+                                            <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class='radio'>
+                                        <label for='captioningRequested'>
+                                            <input type='radio' name='captioningRequested' value='false'>No
+                                        </label>
+                                    </div>
+                                    
+                                </div>
                             </div>
-                            
-                            <div class='radio'>
-                                <label for='captioningRequested'>
-                                    <input type='radio' name='captioningRequested' value='false'>No
-                                </label>
+
+                            <!--Online Course Radio Selection -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='onlineCourse'>Request for Online Course?</label>
+                                <div class='col-lg-12'>
+                                    <div class='radio'>
+                                        <label for='onlineCourse'>
+                                            <input type='radio' name='onlineCourse' value='true'>Yes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class='radio'>
+                                        <label for='onlineCourse'>
+                                            <input type='radio' name='onlineCourse' value='false' checked='checked'>No
+                                        </label>
+                                    </div>
+                                    
+                                </div>
                             </div>
-                            
+
+                            <!--Video Type input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='videoType'>Video type</label>
+                                <div class='col-lg-12'>
+                                    <input id='videoType' name='videoType' type='text' placeholder='ex. John Smith' class='form-control input-md'>
+                                    <div class='help-block'>Type of video</div>
+                                </div>
+                            </div>
+
+                            <!-- Course ID input-->
+                            <div class="form-group form-group-multiple tls-indented">
+                                <label class="col-lg-12 control-label" for="videoTitleOrLink">Video Title or Link</label>  
+                                <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
+                                <div class="col-lg-12 entry">
+                                    <input name="videoTitleOrLink" type="text" placeholder="ex. PSYC-101-02" class="form-control input-md multiple videoTitleOrLink-multiple">
+                                    
+                                    <!--<span class="input-group-btn">
+                                        <button class="btn btn-success btn-add" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>-->
+                                    
+                                    <div class="help-block">Include video title or online video URL</div>
+                                </div>
+
+                                <span class="input-group-btn tls-muliple-plus-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+
                         </div>
-                    </div>
-                    <!--Online Course Radio Selection -->
-                    <div class='form-group tls-indented'>
-                        <label class='col-md-4 control-label' for='onlineCourse'>Request for Online Course?</label>
-                        <div class='col-md-4'>
-                            <div class='radio'>
-                                <label for='onlineCourse'>
-                                    <input type='radio' name='onlineCourse' value='true'>Yes
-                                </label>
-                            </div>
-                            
-                            <div class='radio'>
-                                <label for='onlineCourse'>
-                                    <input type='radio' name='onlineCourse' value='false' checked='checked'>No
-                                </label>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <!--Video Type input -->
-                    <div class='form-group tls-indented'>
-                        <label class='col-md-4 control-label' for='videoType'>Video type</label>
-                        <div class='col-md-4'>
-                            <input id='videoType' name='videoType' type='text' placeholder='ex. John Smith' class='form-control input-md'>
-                            <div class='help-block'>Type of video</div>
-                        </div>
-                    </div>
-            </div>
+                <!-- hidden unless streaming/captioning checkbox is selected -->
 
 
                 <!-- Form Submit -->
-                <div class="form-group">
+                <div class="form-group tls-submit">
                     <div class="col-lg-12">
                     </div>
                     <div class="col-lg-12">

@@ -62,14 +62,25 @@ $( document ).ready(function docReady(){
         e.preventDefault();
 
         var controlForm = $(this).parents('.form-group'),
-            currentEntry = $(this).parents('.entry:first'),
-            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+            lastEntry = controlForm.find('.entry:last'),
+            newEntry = $(lastEntry.clone()).insertAfter(lastEntry);
+                
+            newEntry.find('input').val('');
+            newEntry.append('<span class="input-group-btn tls-muliple-minus-btn">\
+                                <button class="btn btn-danger btn-remove" type="button">\
+                                    <span class="glyphicon glyphicon-minus"></span>\
+                                </button>\
+                            </span>\
+                        ');
 
-        newEntry.find('input').val('');
-        controlForm.find('.entry:not(:last) .btn-add')
-            .removeClass('btn-add').addClass('btn-remove')
-            .removeClass('btn-success').addClass('btn-danger')
-            .html('<span class="glyphicon glyphicon-minus"></span>');
+            console.log(lastEntry);
+        //     
+
+        // newEntry.find('input').val('');
+        // controlForm.find('.entry:not(:last) .btn-add')
+        //     .removeClass('btn-add').addClass('btn-remove')
+        //     .removeClass('btn-success').addClass('btn-danger')
+        //     .html('<span class="glyphicon glyphicon-minus"></span>');
     }).on('click', '.btn-remove', function(e){
 		$(this).parents('.entry:first').remove();
 
@@ -386,16 +397,3 @@ var tlsTypeFormFields = {
 
     }
 }
-// var addFieldsToData = ['nameRequester','emailRequester','courseID', 'nameProfessor', 'emailProfessor'];
-// //list the group name to select with jquery to get checkbox form values
-// var addRadioToData = [];
-// var addCheckBoxToData = ['type'];
-
-//Text
-//<input id="nameProfessor" name="nameProfessor" type="text" placeholder="ex. Sam Jackson" class="form-control input-md">
-
-//Checkbox
-//type="checkbox" class="type" name="type[1][]" id="typeDVD" value="DVD"
-
-//radio
-//<input type="radio" name="requestMadeByProf" id="requestMadeByProf-1" value="false" onclick="handleRadioRequestMadeByProf(this.value);">No
