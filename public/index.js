@@ -46,6 +46,9 @@ socket.on('task-input-failure', function(err, taskName, data){
 
 
 $( document ).ready(function docReady(){
+
+    $('.datepicker').datepicker();
+
     
     $('#tlsTaskForm').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
