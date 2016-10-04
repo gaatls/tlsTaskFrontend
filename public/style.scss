@@ -89,7 +89,7 @@ legend {
 
 .tls-muliple-plus-btn {
     padding-left: 15px;
-    // padding-top: 10px;
+    padding-top: 10px;
 
     .btn {
         border-radius: 4px !important;
@@ -113,5 +113,14 @@ legend {
 }
 
 .form-group-multiple {
-    margin-bottom: 50px !important;
+    // margin-bottom: 50px !important;
+}
+
+.tls-datepicker-input {
+    max-width: 115px;
+}
+
+.datepicker {
+    margin-top: 15px;
+    margin-left: 15px;
 }

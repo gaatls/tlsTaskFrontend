@@ -47,7 +47,11 @@ socket.on('task-input-failure', function(err, taskName, data){
 
 $( document ).ready(function docReady(){
 
-    $('.datepicker').datepicker();
+    $('.tls-datepicker-input').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        toggleActive: true
+    });
 
     
     $('#tlsTaskForm').validator().on('submit', function (e) {
@@ -407,10 +411,17 @@ var tlsTypeFormFields = {
     
     
     typeStreamingCaptioning: {
-        addFieldsToData: [{id:'videoType',readName:"Video Type        "},{class:'videoTitleOrLink-multiple',readName:'Video Titles/URLs '}],
-        addRadioToData: [{id:'captioningRequested',readName:"Captioning Req    "},{id:'onlineCourse',readName:"Online Course     "}],
+        addFieldsToData: [
+                            {id:'videoType',                   readName:"Video Type        "},
+                            {class:'videoTitleOrLink',readName:'Video Titles/URLs '},
+                            {id: 'deliverableDate',            readName:"Deliverable Date  "}    
+                         ],
+        addRadioToData:  [
+                            {id:'captioningRequested',readName:"Captioning Req    "},
+                            {id:'onlineCourse',       readName:"Online Course     "}
+                         ],
         divClassName: "typeStreamingCaptioning-form-group",
-        requiredInputNames: ['videoType']
+        requiredInputNames: ['videoType','deliverableDate', 'videoTitleOrLink']
     },
     typeDVD: {
 

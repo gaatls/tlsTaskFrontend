@@ -78,5 +78,9 @@ legend {
   color: #737373;
   font-style: italic; }
 
-.form-group-multiple {
-  margin-bottom: 50px !important; }
+.tls-datepicker-input {
+  max-width: 115px; }
+
+.datepicker {
+  margin-top: 15px;
+  margin-left: 15px; }

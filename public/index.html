@@ -5,7 +5,7 @@
         <title>TLS Task Input</title>
 
         <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+        <link rel="stylesheet" href="bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css">
         <link rel="stylesheet" href="style.css">
         <script src="jquery/dist/jquery.min.js"></script>
         <script src="bootstrap/dist/js/bootstrap.min.js"></script>
@@ -215,7 +215,7 @@
                                 <label class="col-lg-12 control-label" for="videoTitleOrLink">Video Title or Online Video Link</label>  
                                 <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
                                 <div class="col-lg-12 entry">
-                                    <input name="videoTitleOrLink" type="text" placeholder="ex. moviefile01.mov | www.youtube.com/watch?v=ex" class="form-control input-md multiple videoTitleOrLink-multiple">
+                                    <input name="videoTitleOrLink" type="text" placeholder="ex. moviefile01.mov | www.youtube.com/watch?v=ex" class="form-control input-md multiple videoTitleOrLink">
                                     <!--<div class="help-block">Include video title <strong>or</strong> online video URL</div>-->
                                 </div>
 
@@ -228,12 +228,23 @@
                             </div>
 
                             <!-- Delivery date input date-picker -->
-                            <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for='onlineCourse'>Date Deliverable Needed</label>
+                                <div class="col-lg-12">
+                                    <input type="text" id="deliverableDate" name="deliverableDate" class="form-control tls-datepicker-input">
                                 </div>
                             </div>
+
+                            <!--Video Type input -->
+                            <!--<div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='videoType'>Delivery Method</label>
+                                <div class='col-lg-12'>
+                                    <input id='videoType' name='videoType' type='text' placeholder='ex. Online Video' class='form-control input-md'>
+                                    <div class='help-block'>Type of video</div>
+                                </div>
+                            </div>-->
+
+                            
 
                         </div>
                 <!-- hidden unless streaming/captioning checkbox is selected -->
