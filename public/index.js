@@ -36,10 +36,7 @@ socket.on('task-input-success', function(data){
 });
 
 socket.on('task-input-failure', function(err, taskName, data){
-    console.log(err);
-    console.log(data);
-    console.log(taskName);
-    //do anything we need to do after a failed task input (notify user, give them next steps to retry entry or give error status telling them what went wrong????)
+    taskInputFailure(err, taskName, data);
 });
 
 
@@ -325,28 +322,67 @@ function taskInputPending(){
  * 
  */
 function taskInputSuccess(taskData){
-    var taskData = processAsanaData(taskData);
+    var taskData = processAsanaData(taskData, true);
     var modalContainer = $('.task-input-modal');
     var taskInfoEl = modalContainer.find('#tim-task-info');
 
     modalContainer.find('#tim-progress').css('display','none');
     modalContainer.find('#tim-header').html('Task Successfully Created');//.css('color','#449d44');
     $(taskInfoEl).css('display', 'block');
-    modalContainer.find('button').each(function(i){ $(this).css('display','block'); });
+    modalContainer.find('button.tim-btn-success').each(function(i){ $(this).css('display','block'); });
 
     _.forEach(taskData, function(val,key){
         $(taskInfoEl).append(key + ': ' + val + '<br>');
     })
 }
 
+
+var dataFromAttemptedSubmission;
 /**
  * 
  */
-function taskInputSuccessRevert(){
+function taskInputFailure(err, taskName, taskData){
+    dataFromAttemptedSubmission = taskData;
+    
+    taskData.name = taskName;
+    var taskData = processAsanaData(taskData, false);
+    var modalContainer = $('.task-input-modal');
+    var taskInfoEl = modalContainer.find('#tim-task-info');
+
+    modalContainer.find('#tim-progress').css('display','none');
+    modalContainer.find('#tim-header').html('Task Input Failure').css('color','#ff0000');
+    $(taskInfoEl).css('display', 'block');
+    modalContainer.find('button.tim-btn-failure').each(function(i){ $(this).css('display','block'); });
+
+    $(taskInfoEl).append('<span class="red">Error : ' + err.message + '</span><br>');
+    $(taskInfoEl).append('<br><br>Data of Failed Task Submission:<br><br>');
+    _.forEach(taskData, function(val,key){
+        $(taskInfoEl).append(key + ': ' + val + '<br>');
+    })
+}
+
+
+function taskInputResubmit(){
+     taskInputRevert();
+     //check if we have global saved data from our attempted submission;
+     if(dataFromAttemptedSubmission){
+        //send our form data to the server
+        socket.emit('form-submission', dataFromAttemptedSubmission);
+        taskInputPending();
+     }
+     else {
+         alert('Unable to resubmit task');
+     }
+}
+
+/**
+ * 
+ */
+function taskInputRevert(){
     var modalContainer = $('.task-input-modal');
 
     modalContainer.find('#tim-progress').css('display','block');
-    modalContainer.find('#tim-header').html('Task Input Pending');//.css('color','#449d44');
+    modalContainer.find('#tim-header').html('Task Input Pending').css('color','inherit');
     modalContainer.find('#tim-task-info').html("").css('display','none');
     modalContainer.find('button').each(function(i){ $(this).css('display','none'); });
 }
@@ -354,29 +390,36 @@ function taskInputSuccessRevert(){
 /**
  * 
  */
-function processAsanaData(taskData){
-    var parsedExternalData = JSON.parse(taskData.external.data);
+function processAsanaData(taskData, inputSuccessful){
+    if(inputSuccessful){
+        var data = JSON.parse(taskData.external.data);
+    }
+    else {
+        var data = taskData;
+    }
+    
+    
     var combinedDataFields = _.unionWith(addFieldsToData, addCheckBoxToData, addRadioToData);
 
     var returnData = {
         'Task Name         ': taskData.name,
-        'Requested by      ': parsedExternalData.nameRequester,
-        'RIT Email         ': parsedExternalData.emailRequester,
-        'Course ID         ': parsedExternalData.courseID,
-        'Request Type      ': parsedExternalData.type,
-        'Date/Time Created ': parsedExternalData.titleDate,
+        'Requested by      ': data.nameRequester,
+        'RIT Email         ': data.emailRequester,
+        'Course ID         ': data.courseID,
+        'Request Type      ': data.type,
+        'Date/Time Created ': data.titleDate,
         '------------------':'------------------'
     }
 
     _.forEach(combinedDataFields, function(x){
         if(x.readName != null){
             //if fields are optional they can be bla
-            if(parsedExternalData[x.class] || parsedExternalData[x.id]){
+            if(data[x.class] || data[x.id]){
                 if(x.class){
-                    returnData[x.readName] = parsedExternalData[x.class];
+                    returnData[x.readName] = data[x.class];
                 }
                 else {
-                    returnData[x.readName] = parsedExternalData[x.id];
+                    returnData[x.readName] = data[x.id];
                 }
             }
         }
@@ -390,7 +433,7 @@ function processAsanaData(taskData){
  */
 function taskInputComplete(clear){
     $('.task-input-modal, .task-input-modal-backdrop').css('display','none');
-    taskInputSuccessRevert();
+    taskInputRevert();
 
     if(clear){
         $('#tlsTaskForm').find("input[type=text], input[type=email]").each(function(){

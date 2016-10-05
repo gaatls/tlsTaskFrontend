@@ -20,6 +20,8 @@
     </head>
     <body>
         <form id='tlsTaskForm' data-toggle="validator" role="form">
+            
+            <!-- modals that appear to user -->
             <div class="modal-backdrop fade in task-input-modal-backdrop"></div>
             <div class="modal fade in task-input-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-m">
@@ -35,15 +37,18 @@
                                 <div class="progress-bar" style="width: 100%">
                                 </div>  
                             </div>
-                            <button type="button" class="btn btn-success" onclick="taskInputComplete(false);">Submit Similar Task </br> <small>(keep form info)</small></button>
-                            <button type="button" class="btn btn-warning" onclick="taskInputComplete(true);">Done </br> <small>(clear form info)</small></button>
+                            <button type="button" class="btn btn-success tim-btn-success" onclick="taskInputComplete(false);">Submit Similar Task </br> <small>(keep form info)</small></button>
+                            <button type="button" class="btn btn-primary tim-btn-failure" onclick="taskInputResubmit();">Retry Task Submission </br> <small>(same task info)</small></button>
+                            <button type="button" class="btn btn-success tim-btn-failure" onclick="taskInputComplete(false);">Return to Input Form </br> <small>(keep form info)</small></button>
+                            <button type="button" class="btn btn-warning tim-btn-success tim-btn-failure" onclick="taskInputComplete(true);">Done </br> <small>(clear form info)</small></button>
                         </div>  
                     </div>
                 </div>
             </div>
-            
-            <div class="form-horizontal">
+            <!-- end modals that appear to user -->
 
+
+            <div class="form-horizontal">
 
                 <!-- Form Name -->
                 <legend>TLS Task Input Form</legend>
