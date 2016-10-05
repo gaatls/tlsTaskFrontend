@@ -391,6 +391,77 @@
                 <!-- hidden unless DVD checkbox is selected -->
 
 
+                <!-- hidden unless Recording checkbox is selected -->
+                        <div class='tls-group-start-hidden typeRecording-form-group hidden'>
+
+                            <!-- Event date input date-picker -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for='eventDate'>Event Date</label>
+                                <div class="col-lg-12">
+                                    <input type="text" id="eventDate" name="eventDate" class="form-control tls-datepicker-input">
+                                    <div class="help-block">Date of event to be recorded</div>
+                                </div>
+                            </div>
+
+                            <!-- Event time input -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for='eventTime'>Event Time</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="eventTime" name="eventTime">
+                                    <div class="help-block">Time of event to be recorded (on above date)</div>
+                                </div>
+                            </div>
+
+
+                            <!-- Event location input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='eventLocation'>Event Location</label>
+                                <div class='col-lg-12'>
+                                    <input id='eventLocation' name='eventLocation' type='text' placeholder='ex. Lawn outside Building 5' class='form-control input-md'>
+                                    <div class='help-block'>Location of the event to be recorded</div>
+                                </div>
+                            </div>
+
+                            <!-- Equipment needed input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='equipmentNeeded'>Equipment Needed</label>
+                                <div class='col-lg-12'>
+                                    <input id='equipmentNeeded' name='equipmentNeeded' type='text' placeholder='ex. Sweet Camera' class='form-control input-md'>
+                                    <div class='help-block'>Any special equipment that will be necessary to record</div>
+                                </div>
+                            </div>
+
+                        
+                            <!-- Delivery date input date-picker -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for='deliverableDate'>Date Deliverable Needed</label>
+                                <div class="col-lg-12">
+                                    <input type="text" id="deliverableDate" name="deliverableDate" class="form-control tls-datepicker-input">
+                                </div>
+                            </div>
+
+                            <!-- CHANGE - not sure if needed for 'DVD'-->
+                            <!--Delivery Method input (optional) 
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='deliveryMethod'>Delivery Method</label>
+                                <div class='col-lg-12'>
+                                    <input id='deliveryMethod' name='deliveryMethod' type='text' placeholder='ex. Email' class='form-control input-md'>
+                                    <div class='help-block'>How you would like the video delivered (?)</div>
+                                </div>
+                            </div>-->
+
+                            <!-- Notes input (optional) -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for="notes">Notes</label>
+                                <div class='col-lg-12'>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                <!-- hidden unless Recording checkbox is selected -->
+
 
                 <!-- Form Submit -->
                 <div class="form-group tls-submit">

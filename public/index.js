@@ -520,9 +520,17 @@ var tlsTypeFormFields = {
                          ],
         divClassName: "typeDVD-form-group",
         requiredInputNames: ['dvdTitle','wallaceStaffVerification', 'deliverableDate']
-
     }, 
     typeRecording: {
-
+        addFieldsToData: [
+                            {id:'eventDate',       readName:"Event Date        "},
+                            {id:'eventTime',       readName:"Event Time        "},
+                            {id:'eventLocation',   readName:"Event Location    "},
+                            {id:'equipmentNeeded', readName:"Equipment Needed  "},
+                            {id:'deliverableDate', readName:"Deliverable Date  "},
+                            {id:'notes',           readName:"Notes             "},      
+                         ],
+        divClassName: "typeRecording-form-group",
+        requiredInputNames: ['eventDate','eventTime','eventLocation', 'deliverableDate']
     }
 }
