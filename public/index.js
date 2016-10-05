@@ -288,7 +288,7 @@ function handleAddedGroupDeselection(formGroupName){
         
          _.forEach(formData.requiredInputNames, function(inputName){
             var requiredInput = $( '.' + formData.divClassName ).find("input[name=" + inputName + "]");
-           requiredInput.prop('required', false);
+            requiredInput.prop('required', false);
         });
 
         removeFieldNamesFromCollectedData(formData);
@@ -400,12 +400,17 @@ function taskInputComplete(clear){
         $('#tlsTaskForm').find("input[type=checkbox]").each(function(){
             if( $(this).prop('checked', true) ){
                 handleAddedGroupDeselection( $(this).prop('id') );
-                $(this).prop('checked', false).button('refresh');
+                $(this).prop('checked', false);
             }
         });
 
+        
+        //CHANGE, check for default property and set that one to true, set all other radios to false
         $('#requestMadeByProf-1').prop('checked',false).button('refresh');
         $('#requestMadeByProf-0').prop('checked',true).button('refresh');
+
+        //CUSTOM (only works on one date input right now)
+        $('.tls-datepicker-input').datepicker('clearDates');
     }
 }
 
