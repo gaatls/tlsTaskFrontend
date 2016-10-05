@@ -215,7 +215,7 @@
                                 </div>
                             </div>
 
-                            <!-- Course ID input-->
+                            <!-- Video titles or links input-->
                             <div class="form-group form-group-multiple tls-indented">
                                 <label class="col-lg-12 control-label" for="videoTitleOrLink">Video Title or Online Video Link</label>  
                                 <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
@@ -234,7 +234,7 @@
 
                             <!-- Delivery date input date-picker -->
                             <div class="form-group tls-indented">
-                                <label class='col-lg-12 control-label' for='onlineCourse'>Date Deliverable Needed</label>
+                                <label class='col-lg-12 control-label' for='deliverableDate'>Date Deliverable Needed</label>
                                 <div class="col-lg-12">
                                     <input type="text" id="deliverableDate" name="deliverableDate" class="form-control tls-datepicker-input">
                                 </div>
@@ -258,9 +258,138 @@
                             </div>
 
                             
-
                         </div>
                 <!-- hidden unless streaming/captioning checkbox is selected -->
+
+
+                <!-- hidden unless dvd checkbox is selected -->
+                        <div class='tls-group-large typeDVD-form-group hidden'>
+                            
+                            <!-- DVD titles input-->
+                            <div class="form-group form-group-multiple tls-indented">
+                                <label class="col-lg-12 control-label" for="dvdTitle">DVD Title(s)</label>  
+                                <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
+                                <div class="col-lg-12 entry">
+                                    <input name="dvdTitle" type="text" placeholder="ex. Mission Impossible" class="form-control input-md multiple dvdTitle">
+                                    <!--<div class="help-block">Include video title <strong>or</strong> online video URL</div>-->
+                                </div>
+
+                                <!-- button to add additional fields -->
+                                <span class="input-group-btn tls-muliple-plus-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+
+
+                            <!--DVD ownership input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='dvdOwnership'>DVD Ownership</label>
+                                <div class='col-lg-12'>
+                                    <input id='dvdOwnership' name='dvdOwnership' type='text' placeholder='ex. Jim Johnson (? idk if just name)' class='form-control input-md'>
+                                    <div class='help-block'>The owner of the DVD(s)</div>
+                                </div>
+                            </div>
+
+                            <!--Wallace staff verification input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='wallaceStaffVerification'>Wallace Staff Verification</label>
+                                <div class='col-lg-12'>
+                                    <input id='wallaceStaffVerification' name='wallaceStaffVerification' type='text' placeholder='ex. Jessica Wally' class='form-control input-md'>
+                                    <div class='help-block'>Name of Wallace staff member who verified</div>
+                                </div>
+                            </div>
+
+                            <!-- Captioning requested radio selection -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='captioningRequested'>Captioning Service Requested?</label>
+                                <div class='col-lg-12'>
+                                    <div class='radio'>
+                                        <label for='captioningRequested'>
+                                            <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class='radio'>
+                                        <label for='captioningRequested'>
+                                            <input type='radio' name='captioningRequested' value='false'>No
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+
+                            <!-- DVD copy radio selection -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='dvdCopyRequested'>DVD Copy Requested?</label>
+                                <div class='col-lg-12'>
+                                    <div class='radio'>
+                                        <label for='dvdCopyRequested'>
+                                            <input type='radio' name='dvdCopyRequested' value='true'>Yes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class='radio'>
+                                        <label for='dvdCopyRequested'>
+                                            <input type='radio' name='dvdCopyRequested' value='false' checked='checked'>No
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+
+                            <!-- Remaster requested radio selection -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='remasterRequested'>Remaster Requested?</label>
+                                <div class='col-lg-12'>
+                                    <div class='radio'>
+                                        <label for='remasterRequested'>
+                                            <input type='radio' name='remasterRequested' value='true'>Yes
+                                        </label>
+                                    </div>
+                                    
+                                    <div class='radio'>
+                                        <label for='remasterRequested'>
+                                            <input type='radio' name='remasterRequested' value='false' checked='checked'>No
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <!-- Delivery date input date-picker -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for='deliverableDate'>Date Deliverable Needed</label>
+                                <div class="col-lg-12">
+                                    <input type="text" id="deliverableDate" name="deliverableDate" class="form-control tls-datepicker-input">
+                                </div>
+                            </div>
+
+                            <!-- CHANGE - not sure if needed for 'DVD'-->
+                            <!--Delivery Method input (optional) 
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='deliveryMethod'>Delivery Method</label>
+                                <div class='col-lg-12'>
+                                    <input id='deliveryMethod' name='deliveryMethod' type='text' placeholder='ex. Email' class='form-control input-md'>
+                                    <div class='help-block'>How you would like the video delivered (?)</div>
+                                </div>
+                            </div>-->
+
+                            <!-- Notes input (optional) -->
+                            <div class="form-group tls-indented">
+                                <label class='col-lg-12 control-label' for="notes">Notes</label>
+                                <div class='col-lg-12'>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                <!-- hidden unless DVD checkbox is selected -->
+
 
 
                 <!-- Form Submit -->

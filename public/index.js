@@ -485,6 +485,20 @@ var tlsTypeFormFields = {
         requiredInputNames: ['videoType','deliverableDate', 'videoTitleOrLink']
     },
     typeDVD: {
+        addFieldsToData: [
+                            {class:'dvdTitle',              readName:"DVD Title(s)      "},
+                            {id:'dvdOwnership',             readName:"DVD Ownership     "},
+                            {id:'wallaceStaffVerification', readName:"Wal. Staff Verif. "},
+                            {id:'deliverableDate',          readName:"Deliverable Date  "},
+                            {id:'notes',                    readName:"Notes             "},      
+                         ],
+        addRadioToData:  [
+                            {id:'captioningRequested',      readName:"Captioning Req    "},
+                            {id:'dvdCopyRequested',         readName:"DVD Copy Req      "},
+                            {id:'remasterRequested',        readName:"Remaster Req      "}
+                         ],
+        divClassName: "typeDVD-form-group",
+        requiredInputNames: ['dvdTitle','wallaceStaffVerification', 'deliverableDate']
 
     }, 
     typeRecording: {
