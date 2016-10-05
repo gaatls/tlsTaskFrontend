@@ -179,7 +179,7 @@ function filterFields(fields, data){
     _.forEach(addFieldsToData, function(x){
         if(x.class){
             var valueArray = [];
-            var els = $( '.' + x.class );
+            var els = $('.tls-group-start-hidden').not('.hidden').find( '.' + x.class );
 
             if(els){
                 els.each(function(){
@@ -195,7 +195,12 @@ function filterFields(fields, data){
 
         }
         else {
-            var el = $( '#' + x.id );
+            if(x.readName === null){
+                var el = $( '#' + x.id );
+            }
+            else{
+                var el = $('.tls-group-start-hidden').not('.hidden').find( '#' + x.id );
+            }
             
             if(el){
                 if(el[0].value == ''){
@@ -220,10 +225,18 @@ function filterFields(fields, data){
  */
 function filterCheckboxes(data){
     _.forEach(addCheckBoxToData, function(x){
-        var el = $( 'input[name=' + x.id + ']:checked' );
+        if(x.readName === null){
+            var el = $( 'input[name=' + x.id + ']:checked' );
+        }
+        else{
+            var el = $('.tls-group-start-hidden').not('.hidden').find( 'input[name=' + x.id + ']:checked' );
+        }
         
         if(el){
             data[x.id] = el[0].value;
+        }
+        else {
+            throw new TypeError("Checkbox value not found");
         }
     })
 
@@ -236,10 +249,18 @@ function filterCheckboxes(data){
  */
 function filterRadios(data){
     _.forEach(addRadioToData, function(x){
-        var el = $( 'input[name=' + x.id + ']:checked' );
+        if(x.readName === null){
+            var el = $( 'input[name=' + x.id + ']:checked' );
+        }
+        else{
+            var el = $('.tls-group-start-hidden').not('.hidden').find( 'input[name=' + x.id + ']:checked' );
+        }
         
         if(el){
             data[x.id] = el[0].value;
+        }
+        else {
+            throw new TypeError("Radio value not found");
         }
     })
 
@@ -408,7 +429,7 @@ function processAsanaData(taskData, inputSuccessful){
         'Course ID         ': data.courseID,
         'Request Type      ': data.type,
         'Date/Time Created ': data.titleDate,
-        '------------------':'------------------'
+        '----------------- ':'------------------'
     }
 
     _.forEach(combinedDataFields, function(x){
