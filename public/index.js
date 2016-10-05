@@ -201,7 +201,12 @@ function filterFields(fields, data){
             var el = $( '#' + x.id );
             
             if(el){
-                data[x.id] = el[0].value;
+                if(el[0].value == ''){
+                    return;
+                }
+                else{
+                    data[x.id] = el[0].value;
+                }
             }
             else {
                 throw new TypeError("Field value not found");
@@ -358,17 +363,21 @@ function processAsanaData(taskData){
         'Requested by      ': parsedExternalData.nameRequester,
         'RIT Email         ': parsedExternalData.emailRequester,
         'Course ID         ': parsedExternalData.courseID,
-        'Type              ': parsedExternalData.type,
-        'Date/Time Created ': parsedExternalData.titleDate
+        'Request Type      ': parsedExternalData.type,
+        'Date/Time Created ': parsedExternalData.titleDate,
+        '------------------':'------------------'
     }
 
     _.forEach(combinedDataFields, function(x){
         if(x.readName != null){
-            if(x.class){
-                returnData[x.readName] = parsedExternalData[x.class];
-            }
-            else {
-                returnData[x.readName] = parsedExternalData[x.id];
+            //if fields are optional they can be bla
+            if(parsedExternalData[x.class] || parsedExternalData[x.id]){
+                if(x.class){
+                    returnData[x.readName] = parsedExternalData[x.class];
+                }
+                else {
+                    returnData[x.readName] = parsedExternalData[x.id];
+                }
             }
         }
     })
@@ -397,14 +406,16 @@ function taskInputComplete(clear){
 
         $('#requestMadeByProf-1').prop('checked',false).button('refresh');
         $('#requestMadeByProf-0').prop('checked',true).button('refresh');
-        handleRadioRequestMadeByProf("true");
     }
 }
 
 
 var tlsTypeFormFields = {
     requestProf: {
-        addFieldsToData: [{id:'nameProfessor',readName:"Professor Name    "},{id:'emailProfessor',readName:"Professor Email   "}],
+        addFieldsToData: [
+                            {id:'nameProfessor', readName:"Professor Name    "},
+                            {id:'emailProfessor',readName:"Professor Email   "}
+                         ],
         divClassName: "requestProf-form-group",
         requiredInputNames: ['nameProfessor','emailProfessor']
     },
@@ -412,9 +423,11 @@ var tlsTypeFormFields = {
     
     typeStreamingCaptioning: {
         addFieldsToData: [
-                            {id:'videoType',                   readName:"Video Type        "},
-                            {class:'videoTitleOrLink',readName:'Video Titles/URLs '},
-                            {id: 'deliverableDate',            readName:"Deliverable Date  "}    
+                            {id:'videoType',          readName:"Video Type        "},
+                            {class:'videoTitleOrLink',readName:"Video Titles/URLs "},
+                            {id:'deliverableDate',    readName:"Deliverable Date  "},
+                            {id:'deliveryMethod',     readName:"Delivery Method   "},
+                            {id:'notes',              readName:"Notes             "},      
                          ],
         addRadioToData:  [
                             {id:'captioningRequested',readName:"Captioning Req    "},
