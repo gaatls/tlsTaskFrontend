@@ -50,15 +50,9 @@ $( document ).ready(function docReady(){
         toggleActive: true
     });
 
-    // $('.tls-datepicker-time-input').datepicker({
-    //     format: 'LT'
-    // });
-
     $('.tls-datepicker-time-input').combodate({
         minuteStep: 10
     });  
-
-    $('select').attr('data-validate', true);
 
     
     $('#tlsTaskForm').validator().on('submit', function (e) {
@@ -85,16 +79,7 @@ $( document ).ready(function docReady(){
                                     <span class="glyphicon glyphicon-minus"></span>\
                                 </button>\
                             </span>\
-                        ');
-
-            console.log(lastEntry);
-        //     
-
-        // newEntry.find('input').val('');
-        // controlForm.find('.entry:not(:last) .btn-add')
-        //     .removeClass('btn-add').addClass('btn-remove')
-        //     .removeClass('btn-success').addClass('btn-danger')
-        //     .html('<span class="glyphicon glyphicon-minus"></span>');
+                           ');
     }).on('click', '.btn-remove', function(e){
 		$(this).parents('.entry:first').remove();
 
