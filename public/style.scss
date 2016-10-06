@@ -16,6 +16,14 @@ span.red{
     color: red;
 }
 
+//not sure why this isnt in the bootstrap
+select {
+    border: 1px solid #cccccc;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+}
+
 .form-horizontal .control-label {
     text-align: left;
 }

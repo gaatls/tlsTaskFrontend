@@ -11,6 +11,12 @@ legend {
 span.red {
   color: red; }
 
+select {
+  border: 1px solid #cccccc;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 4px; }
+
 .form-horizontal .control-label {
   text-align: left; }
 

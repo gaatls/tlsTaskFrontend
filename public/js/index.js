@@ -50,6 +50,16 @@ $( document ).ready(function docReady(){
         toggleActive: true
     });
 
+    // $('.tls-datepicker-time-input').datepicker({
+    //     format: 'LT'
+    // });
+
+    $('.tls-datepicker-time-input').combodate({
+        minuteStep: 10
+    });  
+
+    $('select').attr('data-validate', true);
+
     
     $('#tlsTaskForm').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
