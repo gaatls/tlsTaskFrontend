@@ -1,4 +1,5 @@
 'use strict';
+//let pw = 
 
 let express = require('express');
 let app = require('express')();
@@ -17,8 +18,13 @@ server.listen(8001);
 
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
+app.get('/', function (req, res) {
+        res.sendfile('index.html', { root: __dirname + "" } );
+    });
 
 io.on('connection', function (socket) {
+    
+
     console.log("Successful socket connection");
   
     if(tlsAsana){
