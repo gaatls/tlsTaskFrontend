@@ -1,8 +1,10 @@
 'use strict';
-//let pw = 
+let pw = "blackturtle";
 
 let express = require('express');
 let app = require('express')();
+var bodyParser = require('body-parser')
+
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let _ = require('lodash');
@@ -13,14 +15,32 @@ moment().format();
 
 let tlsAsanaPromise = null;
 
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+
 server.listen(8001);
 
 
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
+
 app.get('/', function (req, res) {
-        res.sendfile('index.html', { root: __dirname + "" } );
-    });
+    res.sendFile('index.html', { root: __dirname + "" } );
+});
+
+app.get('/form.html', function (req, res){
+    res.sendFile('index.html', { root: __dirname + "" } );
+})
+
+app.post('/form.html', urlencodedParser, function (req, res) {
+    if(req.body.password === pw){
+        res.sendFile('/form.html', { root: __dirname + "" } );
+    }
+    else{
+        io.emit('login-failure', 'Password not correct');
+    }
+});
 
 io.on('connection', function (socket) {
     
@@ -34,7 +54,7 @@ io.on('connection', function (socket) {
     }
   
     socket.emit('connected', "Successfully connected");
-
+    
     socket.on('form-submission', data => {
         socketFormSubmission(socket, data);  
     });
