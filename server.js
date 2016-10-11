@@ -3,7 +3,7 @@ let pw = "blackturtle";
 
 let express = require('express');
 let app = require('express')();
-var bodyParser = require('body-parser')
+let bodyParser = require('body-parser')
 
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
