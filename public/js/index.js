@@ -494,7 +494,7 @@ var tlsTypeFormFields = {
                             {id:'notes',              readName:"Notes             "},      
                          ],
         addRadioToData:  [
-                            {id:'captioningRequested',readName:"Captioning Req    "},
+                            {id:'captioningRequestedSC',readName:"Captioning Req    "},
                             {id:'onlineCourse',       readName:"Online Course     "}
                          ],
         divClassName: "typeStreamingCaptioning-form-group",
@@ -509,7 +509,7 @@ var tlsTypeFormFields = {
                             {id:'notes',                    readName:"Notes             "},      
                          ],
         addRadioToData:  [
-                            {id:'captioningRequested',      readName:"Captioning Req    "},
+                            {id:'captioningRequestedDVD',      readName:"Captioning Req    "},
                             {id:'dvdCopyRequested',         readName:"DVD Copy Req      "},
                             {id:'remasterRequested',        readName:"Remaster Req      "}
                          ],

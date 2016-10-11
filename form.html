@@ -172,17 +172,17 @@
 
                             <!--Captioning Requested Radio Selection -->
                             <div class='form-group tls-indented'>
-                                <label class='col-lg-12 control-label' for='captioningRequested'>Captioning Service Requested?</label>
+                                <label class='col-lg-12 control-label' for='captioningRequestedSC'>Captioning Service Requested?</label>
                                 <div class='col-lg-12'>
                                     <div class='radio'>
-                                        <label for='captioningRequested'>
-                                            <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes
+                                        <label for='captioningRequestedSC'>
+                                            <input type='radio' name='captioningRequestedSC' value='true' checked='checked'>Yes
                                         </label>
                                     </div>
                                     
                                     <div class='radio'>
-                                        <label for='captioningRequested'>
-                                            <input type='radio' name='captioningRequested' value='false'>No
+                                        <label for='captioningRequestedSC'>
+                                            <input type='radio' name='captioningRequestedSC' value='false'>No
                                         </label>
                                     </div>
                                     
@@ -267,61 +267,24 @@
                 <!-- hidden unless dvd checkbox is selected -->
                         <div class='tls-group-start-hidden typeDVD-form-group hidden'>
                             
-                            <!-- DVD titles input-->
-                            <div class="form-group form-group-multiple tls-indented">
-                                <label class="col-lg-12 control-label" for="dvdTitle">DVD Title(s)</label>  
-                                <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
-                                <div class="col-lg-12 entry">
-                                    <input name="dvdTitle" type="text" placeholder="ex. Mission Impossible" class="form-control input-md multiple dvdTitle">
-                                    <!--<div class="help-block">Include video title <strong>or</strong> online video URL</div>-->
-                                </div>
-
-                                <!-- button to add additional fields -->
-                                <span class="input-group-btn tls-muliple-plus-btn">
-                                    <button class="btn btn-success btn-add" type="button">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </span>
-                            </div>
-
-
-                            <!--DVD ownership input -->
-                            <div class='form-group tls-indented'>
-                                <label class='col-lg-12 control-label' for='dvdOwnership'>DVD Ownership</label>
-                                <div class='col-lg-12'>
-                                    <input id='dvdOwnership' name='dvdOwnership' type='text' placeholder='ex. Jim Johnson (? idk if just name)' class='form-control input-md'>
-                                    <div class='help-block'>The owner of the DVD(s)</div>
-                                </div>
-                            </div>
-
-                            <!--Wallace staff verification input -->
-                            <div class='form-group tls-indented'>
-                                <label class='col-lg-12 control-label' for='wallaceStaffVerification'>Wallace Staff Verification</label>
-                                <div class='col-lg-12'>
-                                    <input id='wallaceStaffVerification' name='wallaceStaffVerification' type='text' placeholder='ex. Jessica Wally' class='form-control input-md'>
-                                    <div class='help-block'>Name of Wallace staff member who verified</div>
-                                </div>
-                            </div>
-
                             <!-- Captioning requested radio selection -->
                             <div class='form-group tls-indented'>
-                                <label class='col-lg-12 control-label' for='captioningRequested'>Captioning Service Requested?</label>
+                                <label class='col-lg-12 control-label' for='captioningRequestedDVD'>Captioning Service Requested?</label>
                                 <div class='col-lg-12'>
                                     <div class='radio'>
-                                        <label for='captioningRequested'>
-                                            <input type='radio' name='captioningRequested' value='true' checked='checked'>Yes
+                                        <label for='captioningRequestedDVD'>
+                                            <input type='radio' name='captioningRequestedDVD' value='true' checked='checked'>Yes
                                         </label>
                                     </div>
                                     
                                     <div class='radio'>
-                                        <label for='captioningRequested'>
-                                            <input type='radio' name='captioningRequested' value='false'>No
+                                        <label for='captioningRequestedDVD'>
+                                            <input type='radio' name='captioningRequestedDVD' value='false'>No
                                         </label>
                                     </div>
                                     
                                 </div>
                             </div>
-
 
                             <!-- DVD copy radio selection -->
                             <div class='form-group tls-indented'>
@@ -361,6 +324,44 @@
                                     
                                 </div>
                             </div>
+
+                            
+                            <!-- DVD titles input-->
+                            <div class="form-group form-group-multiple tls-indented">
+                                <label class="col-lg-12 control-label" for="dvdTitle">DVD Title(s)</label>  
+                                <label class="col-lg-12 control-sub-label">(use +/- button to add/remove additional fields)</label>
+                                <div class="col-lg-12 entry">
+                                    <input name="dvdTitle" type="text" placeholder="ex. Mission Impossible" class="form-control input-md multiple dvdTitle">
+                                    <!--<div class="help-block">Include video title <strong>or</strong> online video URL</div>-->
+                                </div>
+
+                                <!-- button to add additional fields -->
+                                <span class="input-group-btn tls-muliple-plus-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+
+
+                            <!--DVD ownership input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='dvdOwnership'>DVD Ownership</label>
+                                <div class='col-lg-12'>
+                                    <input id='dvdOwnership' name='dvdOwnership' type='text' placeholder='ex. Jim Johnson (? idk if just name)' class='form-control input-md'>
+                                    <div class='help-block'>The owner of the DVD(s)</div>
+                                </div>
+                            </div>
+
+                            <!--Wallace staff verification input -->
+                            <div class='form-group tls-indented'>
+                                <label class='col-lg-12 control-label' for='wallaceStaffVerification'>Wallace Staff Verification</label>
+                                <div class='col-lg-12'>
+                                    <input id='wallaceStaffVerification' name='wallaceStaffVerification' type='text' placeholder='ex. Jessica Wally' class='form-control input-md'>
+                                    <div class='help-block'>Name of Wallace staff member who verified</div>
+                                </div>
+                            </div>
+
 
                             <!-- Delivery date input date-picker -->
                             <div class="form-group tls-indented">
